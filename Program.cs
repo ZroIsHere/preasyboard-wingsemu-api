@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components.Web;
-using WebApplication1.Controllers;
+using noswebapp.Controllers;
 using WingsEmu.Communication.gRPC.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 

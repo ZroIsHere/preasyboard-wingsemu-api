@@ -2,7 +2,7 @@
 using WingsAPI.Communication.DbServer.AccountService;
 using WingsAPI.Data.Account;
 
-namespace WebApplication1.Controllers;
+namespace noswebapp.Controllers;
 
 [ApiController]
 [Route("[controller]")]
