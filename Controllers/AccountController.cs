@@ -48,7 +48,7 @@ public class AccountController : Controller
         }).Result;
     }
 
-    [HttpPost("GetAccountBan")]
+    [HttpGet("GetAccountBan")]
     public AccountBanGetResponse GetAccountBan(long id)
     {
         return _container.GetService<IAccountService>().GetAccountBan(new()
@@ -66,7 +66,7 @@ public class AccountController : Controller
         }).Result;
     }
 
-    [HttpPost("GetAccountPenalties")]
+    [HttpGet("GetAccountPenalties")]
     public AccountPenaltyGetAllResponse GetAccountPenalties(long id)
     {
         return _container.GetService<IAccountService>().GetAccountPenalties(new()
