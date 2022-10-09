@@ -29,12 +29,18 @@ public class NoteController: Controller
     [HttpPost("RemoveNote")]
     public BasicRpcResponse RemoveNoteAsync(long noteid)
     {
-        return _container.GetService<INoteService>().RemoveNoteAsync(noteid).Result;
+        return _container.GetService<INoteService>().RemoveNoteAsync(new()
+        {
+            NoteId = noteid
+        }).Result;
     }
 
     [HttpPost("OpenNote")]
-    public CreateNoteResponse OpenNoteAsync(long noteid)
+    public BasicRpcResponse OpenNoteAsync(long noteid)
     {
-        return _container.GetService<INoteService>().OpenNoteAsync(noteid).Result;
+        return _container.GetService<INoteService>().OpenNoteAsync(new()
+        {
+            NoteId = noteid
+        }).Result;
     }
 }
