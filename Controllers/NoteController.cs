@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using noswebapp_api;
 using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
 
@@ -21,14 +22,22 @@ public class NoteController: Controller
     }
 
     [HttpPost("CreateNote")]
-    public CreateNoteResponse CreateNoteAsync(CreateNoteRequest req)
+    public CreateNoteResponse CreateNoteAsync(CreateNoteRequest req, string AuthKey)
     {
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        {
+            return null;
+        }
         return _container.GetService<INoteService>().CreateNoteAsync(req).Result;
     }
 
     [HttpPost("RemoveNote")]
-    public BasicRpcResponse RemoveNoteAsync(long noteid)
+    public BasicRpcResponse RemoveNoteAsync(long noteid, string AuthKey)
     {
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        {
+            return null;
+        }
         return _container.GetService<INoteService>().RemoveNoteAsync(new()
         {
             NoteId = noteid
@@ -36,8 +45,12 @@ public class NoteController: Controller
     }
 
     [HttpPost("OpenNote")]
-    public BasicRpcResponse OpenNoteAsync(long noteid)
+    public BasicRpcResponse OpenNoteAsync(long noteid, string AuthKey)
     {
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        {
+            return null;
+        }
         return _container.GetService<INoteService>().OpenNoteAsync(new()
         {
             NoteId = noteid

@@ -1,3 +1,5 @@
+using System.Text;
+using dotenv.net;
 using Microsoft.AspNetCore.Components.Web;
 using noswebapp.Controllers;
 using Plugin.Database;
@@ -6,6 +8,13 @@ using WingsEmu.Communication.gRPC.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+//Load environment variables
+string envfile = "noswebapp.env";
+if (!File.Exists(envfile))
+{
+    envfile = "../../" + envfile;
+}
+DotEnv.Load(new DotEnvOptions(true, new[] { envfile }, Encoding.UTF8));
 // Add services to the container.
 
 builder.Services.AddControllers();

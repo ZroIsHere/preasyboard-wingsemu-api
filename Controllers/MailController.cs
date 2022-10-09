@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using noswebapp_api;
 using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
 
@@ -21,20 +22,32 @@ public class MailController : Controller
     }
 
     [HttpPost("CreateMail")]
-    public CreateMailResponse CreateMailAsync(CreateMailRequest req)
+    public CreateMailResponse CreateMailAsync(CreateMailRequest req, string AuthKey)
     {
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        {
+            return null;
+        }
         return _container.GetService<IMailService>().CreateMailAsync(req).Result;
     }
     
     [HttpPost("CreateMailBatch")]
-    public CreateMailBatchResponse CreateMailBatchAsync(CreateMailBatchRequest req)
+    public CreateMailBatchResponse CreateMailBatchAsync(CreateMailBatchRequest req, string AuthKey)
     {
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        {
+            return null;
+        }
         return _container.GetService<IMailService>().CreateMailBatchAsync(req).Result;
     }
     
     [HttpGet("RemoveMail")]
-    public BasicRpcResponse RemoveMailAsync(long characterid, long mailid)
+    public BasicRpcResponse RemoveMailAsync(long characterid, long mailid, string AuthKey)
     {
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        {
+            return null;
+        }
         return _container.GetService<IMailService>().RemoveMailAsync(new()
         {
             CharacterId = characterid,
@@ -43,8 +56,12 @@ public class MailController : Controller
     }
 
     [HttpGet("GetMailsByCharacterId")]
-    public GetMailsResponse GetMailsByCharacterId(long characterid)
+    public GetMailsResponse GetMailsByCharacterId(long characterid, string AuthKey)
     {
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        {
+            return null;
+        }
         return _container.GetService<IMailService>().GetMailsByCharacterId(new()
         {
             CharacterId = characterid
