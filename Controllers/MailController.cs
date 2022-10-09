@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.RequestEntities;
 using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
+using RemoveMailRequest = WingsAPI.Communication.Mail.RemoveMailRequest;
 
 namespace noswebapp.Controllers;
 
@@ -43,7 +45,7 @@ public class MailController : Controller
     }
     
     [HttpGet("RemoveMail")]
-    public BasicRpcResponse RemoveMailAsync([FromHeader] string AuthKey, long characterid, long mailid)
+    public BasicRpcResponse RemoveMailAsync([FromHeader] string AuthKey, RemoveMailRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -51,13 +53,13 @@ public class MailController : Controller
         }
         return _container.GetService<IMailService>().RemoveMailAsync(new()
         {
-            CharacterId = characterid,
-            MailId = mailid
+            CharacterId = Req.CharacterId,
+            MailId = Req.CharacterId
         }).Result;
     }
 
     [HttpGet("GetMailsByCharacterId")]
-    public GetMailsResponse GetMailsByCharacterId([FromHeader] string AuthKey, long characterid)
+    public GetMailsResponse GetMailsByCharacterId([FromHeader] string AuthKey, OnlyAnLongRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -65,7 +67,7 @@ public class MailController : Controller
         }
         return _container.GetService<IMailService>().GetMailsByCharacterId(new()
         {
-            CharacterId = characterid
+            CharacterId = Req.Value
         }).Result;
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.RequestEntities;
 using PhoenixLib.Extensions;
 using Plugin.Database.DB;
 using Plugin.Database.Entities.Account;
@@ -33,7 +34,7 @@ public class AccountController : Controller
     }
 
     [HttpGet("LoadAccountByName")]
-    public AccountDTO LoadAccountByName([FromHeader] string AuthKey, string accountname)
+    public AccountDTO LoadAccountByName([FromHeader] string AuthKey, OnlyAnStringRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -41,12 +42,12 @@ public class AccountController : Controller
         }
         return _container.GetService<IAccountService>().LoadAccountByName(new()
         {
-            Name = accountname
+            Name = Req.Value
         }).Result.AccountDto;
     }
     
     [HttpGet("LoadAccountById")]
-    public AccountDTO LoadAccountById([FromHeader] string AuthKey, long id)
+    public AccountDTO LoadAccountById([FromHeader] string AuthKey, OnlyAnLongRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -54,7 +55,7 @@ public class AccountController : Controller
         }
         return _container.GetService<IAccountService>().LoadAccountById(new()
         {
-            AccountId = id
+            AccountId = Req.Value
         }).Result.AccountDto;
     }
 
@@ -72,7 +73,7 @@ public class AccountController : Controller
     }
 
     [HttpGet("GetAccountBan")]
-    public AccountBanGetResponse GetAccountBan([FromHeader] string AuthKey, long id)
+    public AccountBanGetResponse GetAccountBan([FromHeader] string AuthKey, OnlyAnLongRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -80,7 +81,7 @@ public class AccountController : Controller
         }
         return _container.GetService<IAccountService>().GetAccountBan(new()
         {
-            AccountId = id
+            AccountId = Req.Value
         }).Result;
     }
 
@@ -98,7 +99,7 @@ public class AccountController : Controller
     }
 
     [HttpGet("GetAccountPenalties")]
-    public AccountPenaltyGetAllResponse GetAccountPenalties([FromHeader] string AuthKey, long id)
+    public AccountPenaltyGetAllResponse GetAccountPenalties([FromHeader] string AuthKey, OnlyAnLongRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -106,7 +107,7 @@ public class AccountController : Controller
         }
         return _container.GetService<IAccountService>().GetAccountPenalties(new()
         {
-            AccountId = id
+            AccountId = Req.Value
         }).Result;
     }
 
@@ -124,7 +125,7 @@ public class AccountController : Controller
     }
     
     [HttpPost("CreateAccount")]
-    public BasicRpcResponse CreateAccount([FromHeader] string AuthKey, string accountname, string password, string email)
+    public BasicRpcResponse CreateAccount([FromHeader] string AuthKey, CreateAccountRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -132,7 +133,7 @@ public class AccountController : Controller
         }
         var factory = _container.GetRequiredService<IDbContextFactory<GameContext>>();
         using GameContext dbcontext = factory.CreateDbContext();
-        if (dbcontext.Account.Any(s => s.Name.Equals(accountname)))
+        if (dbcontext.Account.Any(s => s.Name.Equals(Req.AcccountName)))
         {
             return new(){ ResponseType = RpcResponseType.UNKNOWN_ERROR };
         }
@@ -140,8 +141,8 @@ public class AccountController : Controller
         {
             Authority = AuthorityType.User,
             Language = AccountLanguage.EN,
-            Name = accountname,
-            Password = password.ToSha512()
+            Name = Req.AcccountName,
+            Password = Req.Password.ToSha512()
         });
         dbcontext.SaveChangesAsync();
         return new() { ResponseType = RpcResponseType.SUCCESS };

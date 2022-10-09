@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.RequestEntities;
 using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
 
@@ -33,7 +34,7 @@ public class NoteController: Controller
     }
 
     [HttpPost("RemoveNote")]
-    public BasicRpcResponse RemoveNoteAsync([FromHeader] string AuthKey, long noteid)
+    public BasicRpcResponse RemoveNoteAsync([FromHeader] string AuthKey, OnlyAnLongRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -41,12 +42,12 @@ public class NoteController: Controller
         }
         return _container.GetService<INoteService>().RemoveNoteAsync(new()
         {
-            NoteId = noteid
+            NoteId = Req.Value
         }).Result;
     }
 
     [HttpPost("OpenNote")]
-    public BasicRpcResponse OpenNoteAsync([FromHeader] string AuthKey, long noteid)
+    public BasicRpcResponse OpenNoteAsync([FromHeader] string AuthKey, OnlyAnLongRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -54,7 +55,7 @@ public class NoteController: Controller
         }
         return _container.GetService<INoteService>().OpenNoteAsync(new()
         {
-            NoteId = noteid
+            NoteId = Req.Value
         }).Result;
     }
 }
