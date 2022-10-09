@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,9 +25,16 @@ public class NoteController: Controller
     }
 
     [HttpPost("CreateNote")]
-    public CreateNoteResponse CreateNoteAsync(CreateNoteRequest req, string AuthKey)
+    public CreateNoteResponse CreateNoteAsync(CreateNoteRequest req)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        string AuthKey = "";
+        var Headers = new HttpRequestMessage().Headers;
+        if (Headers != null && Headers.Contains("ApiKey"))
+        {
+            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
+        }
+
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -33,9 +42,16 @@ public class NoteController: Controller
     }
 
     [HttpPost("RemoveNote")]
-    public BasicRpcResponse RemoveNoteAsync(long noteid, string AuthKey)
+    public BasicRpcResponse RemoveNoteAsync(long noteid)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        string AuthKey = "";
+        var Headers = new HttpRequestMessage().Headers;
+        if (Headers != null && Headers.Contains("ApiKey"))
+        {
+            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
+        }
+
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -46,9 +62,16 @@ public class NoteController: Controller
     }
 
     [HttpPost("OpenNote")]
-    public BasicRpcResponse OpenNoteAsync(long noteid, string AuthKey)
+    public BasicRpcResponse OpenNoteAsync(long noteid)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        string AuthKey = "";
+        var Headers = new HttpRequestMessage().Headers;
+        if (Headers != null && Headers.Contains("ApiKey"))
+        {
+            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
+        }
+
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
