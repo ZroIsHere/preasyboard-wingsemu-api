@@ -14,13 +14,15 @@ builder.Services.AddServerApiServiceClient();
 builder.Services.AddGrpcSessionServiceClient();
 builder.Services.AddGrpcClusterStatusServiceClient();
 builder.Services.AddClusterCharacterServiceClient();
-builder.Services.AddTranslationsGrpcClient();
+builder.Services.AddTranslationsGrpcClient();w
 builder.Services.AddGrpcRelationServiceClient();
 builder.Services.AddGrpcBazaarServiceClient();
 builder.Services.AddGrpcFamilyServiceClient();
 builder.Services.AddGrpcMailServiceClient();
 builder.Services.AddGrpcDbServerServiceClient();
 builder.Services.AddTransient(typeof(AccountController));
+builder.Services.AddTransient(typeof(MailController));
+builder.Services.AddTransient(typeof(NoteController));
 
 var app = builder.Build();
 
