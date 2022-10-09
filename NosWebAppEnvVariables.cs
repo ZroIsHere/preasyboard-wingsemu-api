@@ -1,4 +1,6 @@
-﻿namespace noswebapp_api;
+﻿using System;
+
+namespace noswebapp_api;
 
 public class NosWebAppEnvVariables
 {

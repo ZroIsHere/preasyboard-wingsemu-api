@@ -2,26 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>noswebapp_api</RootNamespace>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>..\..\dist\noswebapp-api\</OutputPath>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <OutputPath>..\..\dist\noswebapp-api\</OutputPath>
+        <OutputPath>..\..\dist\noswebapp-api\</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="dotenv.net" Version="3.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-rc.1.22426.7" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\WingsAPI.Plugins\WingsAPI.Plugins.csproj" />
+      <ProjectReference Include="..\WingsAPI.Communication\WingsAPI.Communication.csproj" />
       <ProjectReference Include="..\WingsEmu.Communication.gRPC\WingsEmu.Communication.gRPC.csproj" />
       <ProjectReference Include="..\_plugins\Plugin.DB.EF\Plugin.DB.EF.csproj" />
     </ItemGroup>
