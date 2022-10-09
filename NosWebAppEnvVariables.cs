@@ -2,11 +2,16 @@
 
 public class NosWebAppEnvVariables
 {
+    static string _key = "";
     public static string AuthKey
     {
         get
         {
-            return Environment.GetEnvironmentVariable("API_AUTH_KEY") ?? "skSdhgASdS";
+            if (string.IsNullOrEmpty(_key))
+            {
+                _key = Environment.GetEnvironmentVariable("API_AUTH_KEY") ?? "skSdhgASdS";
+            }
+            return _key;
         }
     }
 }
