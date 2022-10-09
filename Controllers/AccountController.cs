@@ -35,7 +35,7 @@ public class AccountController : Controller
     [HttpGet("LoadAccountByName")]
     public AccountDTO LoadAccountByName([FromHeader] string AuthKey, string accountname)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -48,7 +48,7 @@ public class AccountController : Controller
     [HttpGet("LoadAccountById")]
     public AccountDTO LoadAccountById([FromHeader] string AuthKey, long id)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -61,7 +61,7 @@ public class AccountController : Controller
     [HttpPost("SaveAccount")]
     public AccountSaveResponse SaveAccount([FromHeader] string AuthKey, AccountDTO dto)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -74,7 +74,7 @@ public class AccountController : Controller
     [HttpGet("GetAccountBan")]
     public AccountBanGetResponse GetAccountBan([FromHeader] string AuthKey, long id)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -87,7 +87,7 @@ public class AccountController : Controller
     [HttpPost("SaveAccountBan")]
     public AccountBanSaveResponse SaveAccountBan([FromHeader] string AuthKey, AccountBanDto dto)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -100,7 +100,7 @@ public class AccountController : Controller
     [HttpGet("GetAccountPenalties")]
     public AccountPenaltyGetAllResponse GetAccountPenalties([FromHeader] string AuthKey, long id)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -113,7 +113,7 @@ public class AccountController : Controller
     [HttpPost("SaveAccountPenalties")]
     public AccountPenaltyMultiSaveResponse SaveAccountPenalties([FromHeader] string AuthKey, List<AccountPenaltyDto> list)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -126,7 +126,7 @@ public class AccountController : Controller
     [HttpPost("CreateAccount")]
     public BasicRpcResponse CreateAccount([FromHeader] string AuthKey, string accountname, string password, string email)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }

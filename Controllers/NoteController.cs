@@ -25,7 +25,7 @@ public class NoteController: Controller
     [HttpPost("CreateNote")]
     public CreateNoteResponse CreateNoteAsync([FromHeader] string AuthKey, CreateNoteRequest req)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -35,7 +35,7 @@ public class NoteController: Controller
     [HttpPost("RemoveNote")]
     public BasicRpcResponse RemoveNoteAsync([FromHeader] string AuthKey, long noteid)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -48,7 +48,7 @@ public class NoteController: Controller
     [HttpPost("OpenNote")]
     public BasicRpcResponse OpenNoteAsync([FromHeader] string AuthKey, long noteid)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }

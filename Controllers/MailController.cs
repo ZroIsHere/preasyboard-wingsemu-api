@@ -25,7 +25,7 @@ public class MailController : Controller
     [HttpPost("CreateMail")]
     public CreateMailResponse CreateMailAsync([FromHeader] string AuthKey, CreateMailRequest req)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -35,7 +35,7 @@ public class MailController : Controller
     [HttpPost("CreateMailBatch")]
     public CreateMailBatchResponse CreateMailBatchAsync([FromHeader] string AuthKey, CreateMailBatchRequest req)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -45,7 +45,7 @@ public class MailController : Controller
     [HttpGet("RemoveMail")]
     public BasicRpcResponse RemoveMailAsync([FromHeader] string AuthKey, long characterid, long mailid)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -59,7 +59,7 @@ public class MailController : Controller
     [HttpGet("GetMailsByCharacterId")]
     public GetMailsResponse GetMailsByCharacterId([FromHeader] string AuthKey, long characterid)
     {
-        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
