@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -34,16 +33,9 @@ public class AccountController : Controller
     }
 
     [HttpGet("LoadAccountByName")]
-    public AccountDTO LoadAccountByName(string accountname)
+    public AccountDTO LoadAccountByName(string accountname, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-        
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -54,16 +46,9 @@ public class AccountController : Controller
     }
     
     [HttpGet("LoadAccountById")]
-    public AccountDTO LoadAccountById(long id)
+    public AccountDTO LoadAccountById(long id, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -74,16 +59,9 @@ public class AccountController : Controller
     }
 
     [HttpPost("SaveAccount")]
-    public AccountSaveResponse SaveAccount(AccountDTO dto)
+    public AccountSaveResponse SaveAccount(AccountDTO dto, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -94,16 +72,9 @@ public class AccountController : Controller
     }
 
     [HttpGet("GetAccountBan")]
-    public AccountBanGetResponse GetAccountBan(long id)
+    public AccountBanGetResponse GetAccountBan(long id, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -114,16 +85,9 @@ public class AccountController : Controller
     }
 
     [HttpPost("SaveAccountBan")]
-    public AccountBanSaveResponse SaveAccountBan(AccountBanDto dto)
+    public AccountBanSaveResponse SaveAccountBan(AccountBanDto dto, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -134,16 +98,9 @@ public class AccountController : Controller
     }
 
     [HttpGet("GetAccountPenalties")]
-    public AccountPenaltyGetAllResponse GetAccountPenalties(long id)
+    public AccountPenaltyGetAllResponse GetAccountPenalties(long id, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -154,16 +111,9 @@ public class AccountController : Controller
     }
 
     [HttpPost("SaveAccountPenalties")]
-    public AccountPenaltyMultiSaveResponse SaveAccountPenalties(List<AccountPenaltyDto> list)
+    public AccountPenaltyMultiSaveResponse SaveAccountPenalties(List<AccountPenaltyDto> list, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -174,16 +124,9 @@ public class AccountController : Controller
     }
     
     [HttpPost("CreateAccount")]
-    public BasicRpcResponse CreateAccount(string accountname, string password, string email)
+    public BasicRpcResponse CreateAccount(string accountname, string password, string email, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }

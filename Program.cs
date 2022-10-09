@@ -3,8 +3,6 @@ using System.Text;
 using dotenv.net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using noswebapp.Controllers;
@@ -42,10 +40,7 @@ builder.Services.AddTransient(typeof(AccountController));
 builder.Services.AddTransient(typeof(MailController));
 builder.Services.AddTransient(typeof(NoteController));
 
-builder.WebHost.UseUrls("http://localhost:21487/");
-
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

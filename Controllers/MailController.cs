@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,16 +23,9 @@ public class MailController : Controller
     }
 
     [HttpPost("CreateMail")]
-    public CreateMailResponse CreateMailAsync(CreateMailRequest req)
+    public CreateMailResponse CreateMailAsync(CreateMailRequest req, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -42,16 +33,9 @@ public class MailController : Controller
     }
     
     [HttpPost("CreateMailBatch")]
-    public CreateMailBatchResponse CreateMailBatchAsync(CreateMailBatchRequest req)
+    public CreateMailBatchResponse CreateMailBatchAsync(CreateMailBatchRequest req, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -59,16 +43,9 @@ public class MailController : Controller
     }
     
     [HttpGet("RemoveMail")]
-    public BasicRpcResponse RemoveMailAsync(long characterid, long mailid)
+    public BasicRpcResponse RemoveMailAsync(long characterid, long mailid, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
@@ -80,16 +57,9 @@ public class MailController : Controller
     }
 
     [HttpGet("GetMailsByCharacterId")]
-    public GetMailsResponse GetMailsByCharacterId(long characterid)
+    public GetMailsResponse GetMailsByCharacterId(long characterid, string AuthKey)
     {
-        string AuthKey = "";
-        var Headers = new HttpRequestMessage().Headers;
-        if (Headers != null && Headers.Contains("ApiKey"))
-        {
-            AuthKey = Headers.GetValues("ApiKey").FirstOrDefault();
-        }
-
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
+        if (AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
