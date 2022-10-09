@@ -131,8 +131,7 @@ public class AccountController : Controller
         {
             return null;
         }
-        var factory = _container.GetRequiredService<IDbContextFactory<GameContext>>();
-        using GameContext dbcontext = factory.CreateDbContext();
+        using GameContext dbcontext = _container.GetRequiredService<IDbContextFactory<GameContext>>().CreateDbContext();
         if (dbcontext.Account.Any(s => s.Name.Equals(Req.AcccountName)))
         {
             return new(){ ResponseType = RpcResponseType.UNKNOWN_ERROR };
