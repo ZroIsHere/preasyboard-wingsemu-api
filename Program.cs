@@ -40,6 +40,7 @@ builder.Services.AddTransient<IDependencyInjectorPlugin, DatabasePlugin>();
 builder.Services.AddTransient(typeof(AccountController));
 builder.Services.AddTransient(typeof(MailController));
 builder.Services.AddTransient(typeof(NoteController));
+new DatabasePlugin().AddDependencies(builder.Services);
 
 builder.WebHost.UseUrls("http://localhost:21487/");
 
