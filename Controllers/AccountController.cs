@@ -18,8 +18,6 @@ public class AccountController : Controller
 {
     
     private readonly IServiceProvider _container;
-
-    public AccountController(IServiceProvider container) => _container = container;
     
     private readonly ILogger<AccountController> _logger;
 

@@ -10,8 +10,6 @@ namespace noswebapp.Controllers;
 public class MailController : Controller
 {
     private readonly IServiceProvider _container;
-
-    public MailController(IServiceProvider container) => _container = container;
     
     private readonly ILogger<MailController> _logger;
 

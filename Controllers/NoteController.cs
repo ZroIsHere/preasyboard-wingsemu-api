@@ -10,8 +10,6 @@ namespace noswebapp.Controllers;
 public class NoteController: Controller
 {
     private readonly IServiceProvider _container;
-
-    public NoteController(IServiceProvider container) => _container = container;
     
     private readonly ILogger<NoteController> _logger;
 
