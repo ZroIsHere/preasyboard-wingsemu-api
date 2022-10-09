@@ -12,7 +12,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\WingsAPI.Plugins\WingsAPI.Plugins.csproj" />
       <ProjectReference Include="..\WingsEmu.Communication.gRPC\WingsEmu.Communication.gRPC.csproj" />
+      <ProjectReference Include="..\_plugins\Plugin.DB.EF\Plugin.DB.EF.csproj" />
     </ItemGroup>
 
 </Project>

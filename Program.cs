@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using noswebapp.Controllers;
+using Plugin.Database;
+using WingsAPI.Plugins;
 using WingsEmu.Communication.gRPC.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -14,12 +16,13 @@ builder.Services.AddServerApiServiceClient();
 builder.Services.AddGrpcSessionServiceClient();
 builder.Services.AddGrpcClusterStatusServiceClient();
 builder.Services.AddClusterCharacterServiceClient();
-builder.Services.AddTranslationsGrpcClient();w
+builder.Services.AddTranslationsGrpcClient();
 builder.Services.AddGrpcRelationServiceClient();
 builder.Services.AddGrpcBazaarServiceClient();
 builder.Services.AddGrpcFamilyServiceClient();
 builder.Services.AddGrpcMailServiceClient();
 builder.Services.AddGrpcDbServerServiceClient();
+builder.Services.AddTransient<IDependencyInjectorPlugin, DatabasePlugin>();
 builder.Services.AddTransient(typeof(AccountController));
 builder.Services.AddTransient(typeof(MailController));
 builder.Services.AddTransient(typeof(NoteController));

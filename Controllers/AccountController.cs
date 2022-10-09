@@ -1,6 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using PhoenixLib.Extensions;
+using Plugin.Database.DB;
+using Plugin.Database.Entities.Account;
+using WingsAPI.Communication;
 using WingsAPI.Communication.DbServer.AccountService;
 using WingsAPI.Data.Account;
+using WingsEmu.DTOs.Account;
 
 namespace noswebapp.Controllers;
 
@@ -82,5 +89,25 @@ public class AccountController : Controller
         {
             AccountPenaltyDtos = list
         }).Result;
+    }
+    
+    [HttpPost("CreateAccount")]
+    public BasicRpcResponse CreateAccount(string accountname, string password, string email)
+    {
+        var factory = _container.GetRequiredService<IDbContextFactory<GameContext>>();
+        using GameContext dbcontext = factory.CreateDbContext();
+        if (dbcontext.Account.Any(s => s.Name.Equals(accountname)))
+        {
+            return new(){ ResponseType = RpcResponseType.UNKNOWN_ERROR };
+        }
+        dbcontext.Account.Add(new AccountEntity
+        {
+            Authority = AuthorityType.User,
+            Language = AccountLanguage.EN,
+            Name = accountname,
+            Password = password.ToSha512()
+        });
+        dbcontext.SaveChangesAsync();
+        return new() { ResponseType = RpcResponseType.SUCCESS };
     }
 }
