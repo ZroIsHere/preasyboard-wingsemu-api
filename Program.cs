@@ -41,6 +41,8 @@ builder.Services.AddTransient(typeof(AccountController));
 builder.Services.AddTransient(typeof(MailController));
 builder.Services.AddTransient(typeof(NoteController));
 
+builder.WebHost.UseUrls("http://localhost:21487/");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
