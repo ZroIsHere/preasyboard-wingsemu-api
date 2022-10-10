@@ -119,7 +119,7 @@ public class BazaarController : Controller
         }).Result;
     }
     
-    [HttpGet("RemoveItemsByCharacterIdFromBazaar")]
+    [HttpPost("RemoveItemsByCharacterIdFromBazaar")]
     public BazaarSearchBazaarItemsResponse SearchBazaarItems([FromHeader] string AuthKey, BazaarSearchContext Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
