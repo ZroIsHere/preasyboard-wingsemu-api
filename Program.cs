@@ -1,4 +1,5 @@
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using dotenv.net;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,8 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using noswebapp_api;
 using noswebapp.Controllers;
 using Plugin.Database;
 using WingsAPI.Plugins;
@@ -44,10 +47,17 @@ builder.Services.AddTransient(typeof(BazaarController));
 builder.Services.AddTransient(typeof(AccountWarehouseController));
 builder.Services.AddTransient(typeof(CharacterController));
 new DatabasePlugin().AddDependencies(builder.Services);
+builder.Services.AddAuthentication("jwt").AddJwtBearer("jwt", options =>
+{
+    options.Authority = "https://0.0.0.0:5678";
+    options.Audience = "api1";
+    options.TokenValidationParameters.TokenDecryptionKey = new RsaSecurityKey(RSA.Create(NosWebAppEnvVariables.EncryptionKey));
+});
 
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");
 
 var app = builder.Build();
+app.UseAuthentication();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
@@ -58,5 +68,4 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
