@@ -34,7 +34,7 @@ public class AccountController : Controller
     }
 
     [HttpGet("LoadAccountByName")]
-    public AccountDTO LoadAccountByName([FromHeader] string AuthKey, OnlyAnStringRequest Req)
+    public AccountLoadResponse LoadAccountByName([FromHeader] string AuthKey, OnlyAnStringRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -43,11 +43,11 @@ public class AccountController : Controller
         return _container.GetService<IAccountService>().LoadAccountByName(new()
         {
             Name = Req.Value
-        }).Result.AccountDto;
+        }).Result;
     }
     
     [HttpGet("LoadAccountById")]
-    public AccountDTO LoadAccountById([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public AccountLoadResponse LoadAccountById([FromHeader] string AuthKey, OnlyAnLongRequest Req)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
@@ -56,7 +56,7 @@ public class AccountController : Controller
         return _container.GetService<IAccountService>().LoadAccountById(new()
         {
             AccountId = Req.Value
-        }).Result.AccountDto;
+        }).Result;
     }
 
     [HttpPost("SaveAccount")]
