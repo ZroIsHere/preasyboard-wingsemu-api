@@ -43,7 +43,7 @@ builder.Services.AddTransient(typeof(NoteController));
 builder.Services.AddTransient(typeof(BazaarController));
 new DatabasePlugin().AddDependencies(builder.Services);
 
-builder.WebHost.UseUrls("http://localhost:21487/");
+builder.WebHost.UseUrls("http://0.0.0.0:21487/");
 
 var app = builder.Build();
 
