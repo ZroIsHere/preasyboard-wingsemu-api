@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using WingsAPI.Communication;
 
 namespace noswebapp.Controllers;
 
@@ -21,107 +22,120 @@ public class CharacterController : Controller
     }
     
     [HttpPost("SaveCharacters")]
-    public void SaveCharacters([FromHeader] string AuthKey)
+    public BasicRpcResponse SaveCharacters([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void SaveCharacter([FromHeader] string AuthKey)
+    public BasicRpcResponse SaveCharacter([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void CreateCharacter([FromHeader] string AuthKey)
+    public BasicRpcResponse CreateCharacter([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void GetCharaters([FromHeader] string AuthKey)
+    public BasicRpcResponse GetCharaters([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void GetCharacterBySlot([FromHeader] string AuthKey)
+    public BasicRpcResponse GetCharacterBySlot([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void GetCharacterById([FromHeader] string AuthKey)
+    public BasicRpcResponse GetCharacterById([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void GetCharacterByName([FromHeader] string AuthKey)
+    public BasicRpcResponse GetCharacterByName([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void FlushCharacterSaves([FromHeader] string AuthKey)
+    public BasicRpcResponse FlushCharacterSaves([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void DeleteCharacter([FromHeader] string AuthKey)
+    public BasicRpcResponse DeleteCharacter([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void ForceRemoveCharacterFromCache([FromHeader] string AuthKey)
+    public BasicRpcResponse ForceRemoveCharacterFromCache([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void GetTopPoints([FromHeader] string AuthKey)
+    public BasicRpcResponse GetTopPoints([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void GetTopReputation([FromHeader] string AuthKey)
+    public BasicRpcResponse GetTopReputation([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 
-    public void RefreshRanking([FromHeader] string AuthKey)
+    public BasicRpcResponse RefreshRanking([FromHeader] string AuthKey)
     {
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
         }
+        return null;
     }
 }
