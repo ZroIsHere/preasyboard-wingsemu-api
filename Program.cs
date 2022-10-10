@@ -41,6 +41,7 @@ builder.Services.AddTransient(typeof(AccountController));
 builder.Services.AddTransient(typeof(MailController));
 builder.Services.AddTransient(typeof(NoteController));
 builder.Services.AddTransient(typeof(BazaarController));
+builder.Services.AddTransient(typeof(AccountWarehouseController));
 new DatabasePlugin().AddDependencies(builder.Services);
 
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");
