@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
@@ -69,6 +70,7 @@ public class CharacterController : Controller
 
     public BasicRpcResponse GetCharacterById([FromHeader] string AuthKey)
     {
+        new StreamReader(Request.Body).ReadToEnd();
         if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
         {
             return null;
