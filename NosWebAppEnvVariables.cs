@@ -31,6 +31,6 @@ public class NosWebAppEnvVariables
         }
     }
 
-    public static string AesKey = "VeryDifficultEncryptPassword!$%&";
+    public static string AesKey = "Hp.X2Mf1^.gv&k;WFO]I}o~Q^hc=7lG~";
     public static List<byte> ArrayRemoveFromIndex = new(){ 12, 30, 17, 5, 6, 8 };
 }
