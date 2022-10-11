@@ -47,12 +47,12 @@ public class Encryption
     public static void UpdateKey(char[] AddValues)
     {
         char[] keyarray = NosWebAppEnvVariables.AesKey.ToCharArray();
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < AddValues.Length; i++)
         {
-            byte index = NosWebAppEnvVariables.ArrayRemoveFromIndex.FirstOrDefault();
+            byte index = NosWebAppEnvVariables.ArrayReplaceFromIndex.FirstOrDefault();
             keyarray[index] = AddValues[i];
-            NosWebAppEnvVariables.ArrayRemoveFromIndex.Remove(index);
-            NosWebAppEnvVariables.ArrayRemoveFromIndex.Add(index);
+            NosWebAppEnvVariables.ArrayReplaceFromIndex.Remove(index);
+            NosWebAppEnvVariables.ArrayReplaceFromIndex.Add(index);
         }
         NosWebAppEnvVariables.AesKey = string.Join("", keyarray);
         Console.WriteLine("New key: " + NosWebAppEnvVariables.AesKey);

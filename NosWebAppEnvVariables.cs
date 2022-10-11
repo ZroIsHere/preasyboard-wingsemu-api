@@ -32,5 +32,5 @@ public class NosWebAppEnvVariables
     }
 
     public static string AesKey = "Hp.X2Mf1^.gv&k;WFO]I}o~Q^hc=7lG~";
-    public static List<byte> ArrayRemoveFromIndex = new(){ 12, 30, 17, 5, 6, 8 };
+    public static List<byte> ArrayReplaceFromIndex = new(){ 26, 2, 3, 9, 8, 15, 24, 13, 21, 18, 29, 20, 14, 11, 25, 23, 5, 22, 16, 27, 7, 6, 30, 19, 12, 28, 10, 17, 4, 1, 0 };
 }
