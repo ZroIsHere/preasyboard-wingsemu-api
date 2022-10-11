@@ -52,13 +52,6 @@ builder.Services.AddMvc(options =>
     options.InputFormatters.Insert(0, new RawJsonBodyInputFormatter());
 });
 
-builder.Services.AddAuthentication("jwt").AddJwtBearer("jwt", options => 
-{
-    options.Authority = "https://0.0.0.0:5678";
-    options.Audience = "api1";
-    options.TokenValidationParameters.TokenDecryptionKey = new RsaSecurityKey(RSA.Create(NosWebAppEnvVariables.EncryptionKey));
-});
-
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");
 
 var app = builder.Build();
