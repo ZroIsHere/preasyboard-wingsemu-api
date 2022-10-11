@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -52,5 +54,16 @@ public class TestController : Controller
         }
 
         return null;
+    }
+    
+    [HttpGet("TestAes")]
+    public BasicRpcResponse TestAes([FromBody] string value)
+    {
+        string decrypted = Encryption.Decrypt(value);
+        char[] valuechar = value.ToCharArray();
+        char[] NewValuesForKey = new[] { valuechar.FirstOrDefault(), value.LastOrDefault() };
+        Encryption.UpdateKey(NewValuesForKey);
+
+        return JsonSerializer.Deserialize<BasicRpcResponse>(decrypted);
     }
 }

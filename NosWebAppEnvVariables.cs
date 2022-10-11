@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace noswebapp_api;
 
@@ -29,4 +30,7 @@ public class NosWebAppEnvVariables
             return _EncryptionKey;
         }
     }
+
+    public static string AesKey = "VeryDifficultEncryptPassword!$%&";
+    public static List<byte> ArrayRemoveFromIndex = new(){ 12, 30, 17, 5, 6, 8 };
 }
