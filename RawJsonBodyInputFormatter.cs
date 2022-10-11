@@ -10,6 +10,7 @@ public class RawJsonBodyInputFormatter : InputFormatter
     public RawJsonBodyInputFormatter()
     {
         this.SupportedMediaTypes.Add("application/json");
+        this.SupportedMediaTypes.Add("text/plain");
     }
 
     public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context)
