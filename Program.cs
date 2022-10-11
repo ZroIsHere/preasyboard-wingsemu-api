@@ -49,7 +49,7 @@ builder.Services.AddTransient(typeof(CharacterController));
 new DatabasePlugin().AddDependencies(builder.Services);
 builder.Services.AddMvc(options =>
 {
-    options.InputFormatters.Insert(0, new RawJsonBodyInputFormatter());
+    options.InputFormatters.Insert(0, new RawBodyInputFormatter());
 });
 
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");

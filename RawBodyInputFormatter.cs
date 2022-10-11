@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace noswebapp_api;
 
-public class RawJsonBodyInputFormatter : InputFormatter
+public class RawBodyInputFormatter : InputFormatter
 {
-    public RawJsonBodyInputFormatter()
+    public RawBodyInputFormatter()
     {
         this.SupportedMediaTypes.Add("application/json");
         this.SupportedMediaTypes.Add("text/plain");
