@@ -61,8 +61,7 @@ public class TestController : Controller
     {
         string decrypted = Encryption.Decrypt(value);
         char[] valuechar = value.ToCharArray();
-        char[] NewValuesForKey = new[] { valuechar.FirstOrDefault(), value.LastOrDefault() };
-        Encryption.UpdateKey(NewValuesForKey);
+        Encryption.UpdateKey(new[] { valuechar[0], value[14] });
 
         return JsonSerializer.Deserialize<BasicRpcResponse>(decrypted);
     }
