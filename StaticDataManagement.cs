@@ -13,29 +13,19 @@ public class StaticDataManagement
     public static Dictionary<int, LoginRequest> ChallengeAttempts = new();
     public static Dictionary<string, DateTime> ValidatedTokens = new();
 
-    public static Task RemoveTokensLoop()
+    public static void RemoveTokensLoop()
     {
-        while (true)
+        foreach ((string key, DateTime value) in ValidatedTokens.Where(s => s.Value < DateTime.UtcNow))
         {
-            Task.Delay(TimeSpan.FromMinutes(5));
-
-            foreach ((string key, DateTime value) in ValidatedTokens.Where(s => s.Value < DateTime.UtcNow))
-            {
-                ValidatedTokens.Remove(key);
-            }
+            ValidatedTokens.Remove(key);
         }
     }
 
-    public static Task RemoveAttemptsLoop()
+    public static void RemoveAttemptsLoop()
     {
-        int removeafterseconds = 2;
-        while (true)
+        foreach ((int key, LoginRequest value) in ChallengeAttempts.Where(s => new DateTime(1965, 1, 1, 0, 0, 0, 0).AddSeconds(s.Value.TimeStamp + 2) <= DateTime.Now))
         {
-            Task.Delay(TimeSpan.FromSeconds(removeafterseconds));
-            foreach ((int key, LoginRequest value) in ChallengeAttempts.Where(s => new DateTime(1965, 1, 1, 0, 0, 0, 0).AddSeconds(s.Value.TimeStamp + removeafterseconds) < DateTime.Now))
-            {
-                ChallengeAttempts.Remove(key);
-            }
+            ChallengeAttempts.Remove(key);
         }
     }
 }

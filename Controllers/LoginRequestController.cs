@@ -51,10 +51,11 @@ public class LoginRequestController : Controller
     [HttpPost("CreateToken")]
     public ActionResult CreateToken([FromBody] WebAuthRequest req)
     {
-        var incoming_req = new WebAuthRequest(req);
-
-        if (req.id == Convert.ToInt32(XMLHelper.XmlReadId()) && req.challenge == XMLHelper.XmlReadChallenge())
+        WebAuthRequest oldreq = XMLHelper.GetXmlDeserialized();
+        DateTime oldreqexpiredate = new DateTime(1965, 1, 1, 0, 0, 0, 0).AddSeconds(Convert.ToInt64(oldreq.timestamp) + 2);
+        if (req.id.Equals(oldreq.id) && req.challenge.Equals(oldreq.challenge) &&  oldreqexpiredate <= DateTime.Now)
         {
+            StaticDataManagement.ChallengeAttempts = new();
             string issuer = NosWebAppEnvVariables.JwtIssuer;
             string audience = NosWebAppEnvVariables.JwtAudience;
             byte[] key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
@@ -63,7 +64,7 @@ public class LoginRequestController : Controller
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("Id", Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, XMLHelper.XmlReadId()),
+                    new Claim(JwtRegisteredClaimNames.Sub, oldreq.id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti,
                         Guid.NewGuid().ToString())
                 }),

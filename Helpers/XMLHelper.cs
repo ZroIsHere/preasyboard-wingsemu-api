@@ -25,30 +25,7 @@ public class XMLHelper
         file.Close();
     }
 
-    public static string XmlReadId()
-    {
-        WebAuthRequest overview = GetXmlDeserialized();
-        Console.WriteLine(overview.id);
-        return Convert.ToString(overview.id);
-
-    }
-    public static string XmlReadChallenge()
-    {
-        WebAuthRequest overview = GetXmlDeserialized();
-        Console.WriteLine(overview.challenge);
-
-        return overview.challenge;
-    }
-
-    public static string XmlReadTimestamp()
-    {
-        WebAuthRequest overview = GetXmlDeserialized();
-        Console.WriteLine(overview.timestamp);
-
-        return overview.timestamp;
-    }
-
-    static WebAuthRequest GetXmlDeserialized()
+    public static WebAuthRequest GetXmlDeserialized()
     {
         return (WebAuthRequest)new XmlSerializer(typeof(WebAuthRequest)).Deserialize(new StreamReader(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml"));
     }
