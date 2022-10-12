@@ -83,5 +83,6 @@ app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
 app.UseRouting();
 app.UseAuthorization();
-await StaticDataManagement.RemoveAfter7Days();
+await StaticDataManagement.RemoveTokensLoop();
+await StaticDataManagement.RemoveAttemptsLoop();
 app.Run();
