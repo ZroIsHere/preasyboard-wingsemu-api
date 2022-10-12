@@ -1,3 +1,5 @@
+using noswebapp_api.Services.Interfaces;
+
 namespace noswebapp_api.Helpers;
 
 using Microsoft.Extensions.Options;
@@ -5,38 +7,33 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using noswebapp_api.Services;
-using noswebapp_api.Models;
 using noswebapp_api.Helpers;
-
-
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using noswebapp.Tmp;
+
 using System.Linq;
 using System;
 
 public class JwtMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly NosWebAppEnvVariables _appSettings;
 
-    public JwtMiddleware(RequestDelegate next, IOptions<NosWebAppEnvVariables> appSettings)
+    public JwtMiddleware(RequestDelegate next)
     {
         _next = next;
-        _appSettings = appSettings.Value;
     }
 
-    public async Task Invoke(HttpContext context, ILoginRequestService userService)
+    public async Task Invoke(HttpContext context, IWebAuthRequestService userService)
     {
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
         if (token != null)
-            attachUserToContext(context, userService, token);
+            AttachUserToContext(context, userService, token);
 
         await _next(context);
     }
 
-    private void attachUserToContext(HttpContext context, ILoginRequestService userService, string token)
+    private void AttachUserToContext(HttpContext context, IWebAuthRequestService userService, string token)
     {
         try
         {

@@ -34,6 +34,7 @@ public class NosWebAppEnvVariables
             return _EncryptionKey;
         }
     }
+    
     public static string JwtIssuer
     {
         get
@@ -70,8 +71,4 @@ public class NosWebAppEnvVariables
             return _JwtKey;
         }
     }
-
-
-    public static string AesKey = "Hp.X2Mf1^.gv&k;WFO]I}o~Q^hc=7lG~";
-    public static List<byte> ArrayReplaceFromIndex = new(){ 26, 2, 3, 9, 8, 15, 24, 13, 21, 18, 29, 20, 14, 11, 25, 23, 5, 22, 16, 27, 7, 6, 30, 19, 12, 28, 10, 17, 4, 1, 0 };
 }

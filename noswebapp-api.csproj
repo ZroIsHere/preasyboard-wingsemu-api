@@ -4,6 +4,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <OutputPath>..\..\dist\noswebapp-api\</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <RootNamespace>noswebapp_api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,6 +13,7 @@
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-rc.1.22426.7" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0-rc.1.22426.10" />
         <PackageReference Include="NEST" Version="7.17.4" />
         <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />

@@ -1,4 +1,4 @@
-namespace noswebapp_api.Helpers;
+namespace noswebapp_api.InternalEntities;
 
 public class AppSettings
 {

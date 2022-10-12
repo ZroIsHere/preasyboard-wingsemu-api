@@ -1,20 +1,19 @@
+using noswebapp_api.InternalEntities;
+using noswebapp_api.RequestEntities;
+using noswebapp_api.Services.Interfaces;
+
 namespace noswebapp_api;
 
 using Microsoft.AspNetCore.Mvc;
-using Nest;
 using noswebapp_api.Helpers;
 using noswebapp_api.Services;
-using noswebapp_api.Models;
 
 using System.Web.Mvc;
-using AuthorizeAttribute = Helpers.AuthorizeAttribute;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
-using AuthenticateRequest = Models.AuthenticateRequest;
 using System.Collections.Generic;
-using noswebapp_api.Entities;
 using System;
 using Microsoft.AspNetCore.Http;
 
@@ -22,9 +21,9 @@ using Microsoft.AspNetCore.Http;
 [Route("[controller]")]
 public class LoginRequestsController : ControllerBase
 {
-    private ILoginRequestService _loginRequestService;
+    private IWebAuthRequestService _loginRequestService;
 
-    public LoginRequestsController(ILoginRequestService loginRequestService)
+    public LoginRequestsController(IWebAuthRequestService loginRequestService)
     {
         Console.WriteLine("Started");
         _loginRequestService = loginRequestService;

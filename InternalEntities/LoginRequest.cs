@@ -1,4 +1,4 @@
-namespace noswebapp_api.Entities;
+namespace noswebapp_api.InternalEntities;
 
 using System.Text.Json.Serialization;
 

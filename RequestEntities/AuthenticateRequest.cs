@@ -1,4 +1,4 @@
-namespace noswebapp_api.Models;
+namespace noswebapp_api.RequestEntities;
 
 using System.ComponentModel.DataAnnotations;
 

@@ -16,14 +16,16 @@ using WingsEmu.Communication.gRPC.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Web.Mvc;
 using System.Collections.Generic;
-using noswebapp.Tmp;
+
 using System.Security.Claims;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
 using noswebapp_api.Helpers;
+using noswebapp_api.InputFormatters;
+using noswebapp_api.InternalEntities;
 using noswebapp_api.Services;
-using IUserService = noswebapp_api.Services.ILoginRequestService;
+using noswebapp_api.Services.Interfaces;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -65,7 +67,7 @@ builder.Services.AddMvc(options =>
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 // TODO: Double check that keeping a single instance of this service is actually fine.
-builder.Services.AddSingleton<ILoginRequestService, LoginRequestService>();
+builder.Services.AddSingleton<IWebAuthRequestService, WebAuthRequestService>();
 
 
 

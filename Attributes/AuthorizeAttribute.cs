@@ -1,9 +1,10 @@
-namespace noswebapp_api.Helpers;
+using noswebapp_api.InternalEntities;
+
+namespace noswebapp_api.Attributes;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using noswebapp_api.Entities;
 using System;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

@@ -1,6 +1,6 @@
-namespace noswebapp_api.Models;
+using noswebapp_api.InternalEntities;
 
-using noswebapp_api.Entities;
+namespace noswebapp_api.ResponseEntities;
 
 public class AuthenticateResponse
 {
