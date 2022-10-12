@@ -54,8 +54,7 @@ public class LoginRequestController : Controller
     public ActionResult CreateToken([FromBody] WebAuthRequest req)
     {
         WebAuthRequest oldreq = XMLHelper.GetXmlDeserialized();
-        DateTime oldreqexpiredate = new DateTime(1965, 1, 1, 0, 0, 0, 0).AddSeconds(Convert.ToInt64(oldreq.TimeStamp) + 2);
-        if (req.Id.Equals(oldreq.Id) && req.Challenge.Equals(oldreq.Challenge) &&  oldreqexpiredate <= DateTime.Now)
+        if (req.Id.Equals(oldreq.Id) && req.Challenge.Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
         {
             StaticDataManagement.ChallengeAttempts = new();
             string issuer = NosWebAppEnvVariables.JwtIssuer;

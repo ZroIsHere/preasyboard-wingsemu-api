@@ -24,7 +24,7 @@ public class StaticDataManagement
 
     public static void RemoveAttemptsLoop()
     {
-        foreach ((int key, WebAuthRequest value) in ChallengeAttempts.Where(s => new DateTime(1965, 1, 1, 0, 0, 0, 0).AddSeconds(s.Value.TimeStamp + 2) <= DateTime.Now))
+        foreach ((int key, WebAuthRequest value) in ChallengeAttempts.Where(s => s.Value.TimeStamp < DateTime.UtcNow.ToFileTime()))
         {
             ChallengeAttempts.Remove(key);
         }

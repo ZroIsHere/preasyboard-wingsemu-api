@@ -117,7 +117,7 @@ public class WebAuthRequestService : IWebAuthRequestService
 
     public WebAuthRequest AddChallenge()
     {
-        var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.Now.ToFileTime() };
+        var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.UtcNow.ToFileTime() };
         StaticDataManagement.ChallengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
         return challengeAttempt;
     }
