@@ -13,6 +13,17 @@ using noswebapp.Controllers;
 using Plugin.Database;
 using WingsAPI.Plugins;
 using WingsEmu.Communication.gRPC.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Web.Mvc;
+using System.Collections.Generic;
+using noswebapp.Tmp;
+using System.Security.Claims;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
+using noswebapp_api.Helpers;
+using noswebapp_api.Services;
+using IUserService = noswebapp_api.Services.ILoginRequestService;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +35,6 @@ if (!File.Exists(envfile))
 }
 DotEnv.Load(new DotEnvOptions(true, new[] { envfile }, Encoding.UTF8));
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,17 +63,24 @@ builder.Services.AddMvc(options =>
 });
 
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+// TODO: Double check that keeping a single instance of this service is actually fine.
+builder.Services.AddSingleton<ILoginRequestService, LoginRequestService>();
+
+
 
 var app = builder.Build();
+
 app.UseAuthentication();
-
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI();
-
+app.UseCors(x => x
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+//app.UseSwagger();
+//app.UseSwaggerUI();
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
+app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
+app.UseRouting();
+app.UseAuthorization();
 app.Run();

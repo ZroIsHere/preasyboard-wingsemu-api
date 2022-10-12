@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace noswebapp_api;
 
@@ -7,6 +8,9 @@ public class NosWebAppEnvVariables
 {
     static string _AuthKey = "";
     static string _EncryptionKey = "";
+    static string _JwtIssuer = "";
+    static string _JwtAudience = "";
+    static string _JwtKey = "";
     public static string AuthKey
     {
         get
@@ -30,6 +34,43 @@ public class NosWebAppEnvVariables
             return _EncryptionKey;
         }
     }
+    public static string JwtIssuer
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_JwtIssuer))
+            {
+                _JwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? "https://joydipkanjilal.com/";
+            }
+            return _JwtIssuer;
+        }
+    }
+
+    public static string JwtAudience
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_JwtAudience))
+            {
+                _JwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? "https://joydipkanjilal.com/";
+            }
+            return _JwtAudience;
+        }
+    }
+
+    public static string JwtKey
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_JwtKey))
+            {
+                _JwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? "This is a sample secret key - please don't use in production environment.'";
+            }
+
+            return _JwtKey;
+        }
+    }
+
 
     public static string AesKey = "Hp.X2Mf1^.gv&k;WFO]I}o~Q^hc=7lG~";
     public static List<byte> ArrayReplaceFromIndex = new(){ 26, 2, 3, 9, 8, 15, 24, 13, 21, 18, 29, 20, 14, 11, 25, 23, 5, 22, 16, 27, 7, 6, 30, 19, 12, 28, 10, 17, 4, 1, 0 };
