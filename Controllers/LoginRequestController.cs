@@ -53,9 +53,8 @@ public class LoginRequestController : Controller
     }
 
     [HttpPost("CreateToken")]
-    public ActionResult CreateToken([FromBody] string value)
+    public ActionResult CreateToken([FromBody] WebAuthRequest req)
     {
-        WebAuthRequest req = JsonSerializer.Deserialize<WebAuthRequest>(value);
         WebAuthRequest oldreq = XMLHelper.GetXmlDeserialized();
         if (req.Id.Equals(oldreq.Id) && req.Challenge.DecryptWithPrivateKey().Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
         {
