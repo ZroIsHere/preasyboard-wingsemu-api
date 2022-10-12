@@ -59,6 +59,7 @@ builder.Services.AddTransient(typeof(NoteController));
 builder.Services.AddTransient(typeof(BazaarController));
 builder.Services.AddTransient(typeof(AccountWarehouseController));
 builder.Services.AddTransient(typeof(CharacterController));
+builder.Services.AddTransient(typeof(LoginRequestsController));
 new DatabasePlugin().AddDependencies(builder.Services);
 builder.Services.AddMvc(options =>
 {

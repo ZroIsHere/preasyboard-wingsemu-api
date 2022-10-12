@@ -2,6 +2,7 @@ using noswebapp_api.InternalEntities;
 using noswebapp_api.RequestEntities;
 using noswebapp_api.ResponseEntities;
 using noswebapp_api.Services.Interfaces;
+using noswebapp.RequestEntities;
 
 namespace noswebapp_api.Services;
 
@@ -30,36 +31,36 @@ public class WebAuthRequestService : IWebAuthRequestService
     public AuthenticateResponse Authenticate(AuthenticateRequest loginReq)
     {
 
-        LoginRequest currentLoginRequest = GetChallengeById(loginReq.Id);
+        WebAuthRequest currentWebAuthRequest = GetChallengeById(loginReq.Id);
         
         // return null if user not found
-        if (currentLoginRequest == null) return null;
+        if (currentWebAuthRequest == null) return null;
 
         //FOR ZRO : HERE, SHOULD BE THE LOGIC FOR CHECK ENCRYPT DECRYPT,
         //BEFORE GENERATING TOKEN
         
         // authentication successful so generate jwt token
-        var token = GenerateJwtToken(currentLoginRequest);
+        var token = GenerateJwtToken(currentWebAuthRequest);
         
-        return new AuthenticateResponse(currentLoginRequest, token);
+        return new AuthenticateResponse(currentWebAuthRequest, token);
     }
 
-    public IEnumerable<LoginRequest> GetAll()
+    public IEnumerable<WebAuthRequest> GetAll()
     {
 
-        return (IEnumerable<LoginRequest>)StaticDataManagement.ChallengeAttempts;
+        return (IEnumerable<WebAuthRequest>)StaticDataManagement.ChallengeAttempts;
     }
 
 
 
-    public LoginRequest GetById(int id)
+    public WebAuthRequest GetById(int id)
     {
         return StaticDataManagement.ChallengeAttempts[0];
     }
 
     // helper methods
 
-    private string GenerateJwtToken(LoginRequest user)
+    private string GenerateJwtToken(WebAuthRequest user)
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -95,13 +96,13 @@ public class WebAuthRequestService : IWebAuthRequestService
     }
 
    
-    public List<LoginRequest> GetChallenges()
+    public List<WebAuthRequest> GetChallenges()
     {
         Console.WriteLine("UserService::GetChallenges " + StaticDataManagement.ChallengeAttempts.Count);
         return StaticDataManagement.ChallengeAttempts.Values.ToList();
     }
 
-    public LoginRequest GetChallengeById(int id)
+    public WebAuthRequest GetChallengeById(int id)
     {
         Console.WriteLine("AAA");
         Console.WriteLine(id);
@@ -114,9 +115,9 @@ public class WebAuthRequestService : IWebAuthRequestService
         return null;
     }
 
-    public LoginRequest AddChallenge()
+    public WebAuthRequest AddChallenge()
     {
-        var challengeAttempt = new LoginRequest { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.Now.ToFileTime() };
+        var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.Now.ToFileTime() };
         StaticDataManagement.ChallengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
         return challengeAttempt;
     }

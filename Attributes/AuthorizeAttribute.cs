@@ -1,4 +1,5 @@
 using noswebapp_api.InternalEntities;
+using noswebapp.RequestEntities;
 
 namespace noswebapp_api.Attributes;
 
@@ -12,7 +13,7 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
 {
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var user = (LoginRequest)context.HttpContext.Items["LoginRequest"];
+        var user = (WebAuthRequest)context.HttpContext.Items["LoginRequest"];
         if (user == null)
         {
             // not logged in

@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using noswebapp_api.InternalEntities;
 using noswebapp_api.RequestEntities;
 using noswebapp_api.ResponseEntities;
+using noswebapp.RequestEntities;
 
 namespace noswebapp_api.Services.Interfaces;
 
 public interface IWebAuthRequestService
 {
-    List<LoginRequest> GetChallenges();
-    LoginRequest GetChallengeById(int id);
+    List<WebAuthRequest> GetChallenges();
+    WebAuthRequest GetChallengeById(int id);
 
-    LoginRequest AddChallenge();
+    WebAuthRequest AddChallenge();
 
     AuthenticateResponse Authenticate(AuthenticateRequest model);
-    IEnumerable<LoginRequest> GetAll();
+    IEnumerable<WebAuthRequest> GetAll();
 
-    LoginRequest GetById(int id);
+    WebAuthRequest GetById(int id);
 
     String RandomString(int size, bool lowerCase);
 }

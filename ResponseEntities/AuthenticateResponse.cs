@@ -1,4 +1,5 @@
 using noswebapp_api.InternalEntities;
+using noswebapp.RequestEntities;
 
 namespace noswebapp_api.ResponseEntities;
 
@@ -10,7 +11,7 @@ public class AuthenticateResponse
     public string Token { get; set; }
 
 
-    public AuthenticateResponse(LoginRequest loginRequest, string token)
+    public AuthenticateResponse(WebAuthRequest loginRequest, string token)
     {
         Id = loginRequest.Id;
         Challenge = loginRequest.Challenge;

@@ -9,11 +9,14 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using noswebapp_api;
 using noswebapp_api.Attributes;
 using noswebapp_api.Helpers;
+using noswebapp_api.InternalEntities;
+using noswebapp_api.Services.Interfaces;
 using noswebapp.Helpers;
 using noswebapp.RequestEntities;
 using WingsAPI.Communication;
@@ -34,11 +37,10 @@ public class LoginRequestController : Controller
         _container = container;
     }
     
-    [HttpPost("LoginRequest")]
-    public HttpResponseMessage LoginRequest([FromBody] string value)
+    [HttpGet("LoginRequest")]
+    public WebAuthRequest LoginRequest()
     {
-
-        return JsonSerializer.Deserialize<HttpResponseMessage>(value);
+        return _container.GetService<IWebAuthRequestService>().AddChallenge();
     }
 
     [Authorize]
@@ -52,8 +54,8 @@ public class LoginRequestController : Controller
     public ActionResult CreateToken([FromBody] WebAuthRequest req)
     {
         WebAuthRequest oldreq = XMLHelper.GetXmlDeserialized();
-        DateTime oldreqexpiredate = new DateTime(1965, 1, 1, 0, 0, 0, 0).AddSeconds(Convert.ToInt64(oldreq.timestamp) + 2);
-        if (req.id.Equals(oldreq.id) && req.challenge.Equals(oldreq.challenge) &&  oldreqexpiredate <= DateTime.Now)
+        DateTime oldreqexpiredate = new DateTime(1965, 1, 1, 0, 0, 0, 0).AddSeconds(Convert.ToInt64(oldreq.TimeStamp) + 2);
+        if (req.Id.Equals(oldreq.Id) && req.Challenge.Equals(oldreq.Challenge) &&  oldreqexpiredate <= DateTime.Now)
         {
             StaticDataManagement.ChallengeAttempts = new();
             string issuer = NosWebAppEnvVariables.JwtIssuer;
@@ -64,7 +66,7 @@ public class LoginRequestController : Controller
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("Id", Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, oldreq.id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, oldreq.Id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Jti,
                         Guid.NewGuid().ToString())
                 }),

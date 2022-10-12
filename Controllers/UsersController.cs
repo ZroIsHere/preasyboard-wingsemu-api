@@ -1,6 +1,7 @@
 using noswebapp_api.InternalEntities;
 using noswebapp_api.RequestEntities;
 using noswebapp_api.Services.Interfaces;
+using noswebapp.RequestEntities;
 
 namespace noswebapp_api;
 
@@ -31,13 +32,13 @@ public class LoginRequestsController : ControllerBase
 
     [Produces("application/json")]
     [HttpGet("login")]
-    public LoginRequest Login()
+    public WebAuthRequest Login()
     {
         return _loginRequestService.AddChallenge();
     }
 
     [HttpGet("users")]
-    public List<LoginRequest> Users()
+    public List<WebAuthRequest> Users()
     {
         return _loginRequestService.GetChallenges();
     }
