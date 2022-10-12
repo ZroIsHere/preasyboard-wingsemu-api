@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using noswebapp_api;
 using noswebapp_api.Attributes;
+using noswebapp_api.Extensions;
 using noswebapp_api.Helpers;
 using noswebapp_api.InternalEntities;
 using noswebapp_api.Services.Interfaces;
@@ -56,7 +57,7 @@ public class LoginRequestController : Controller
     {
         WebAuthRequest req = JsonSerializer.Deserialize<WebAuthRequest>(value);
         WebAuthRequest oldreq = XMLHelper.GetXmlDeserialized();
-        if (req.Id.Equals(oldreq.Id) && req.Challenge.Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
+        if (req.Id.Equals(oldreq.Id) && req.Challenge.DecryptWithPrivateKey().Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
         {
             StaticDataManagement.ChallengeAttempts = new();
             string issuer = NosWebAppEnvVariables.JwtIssuer;
