@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,8 +52,9 @@ public class LoginRequestController : Controller
     }
 
     [HttpPost("CreateToken")]
-    public ActionResult CreateToken([FromBody] WebAuthRequest req)
+    public ActionResult CreateToken([FromBody] string value)
     {
+        WebAuthRequest req = JsonSerializer.Deserialize<WebAuthRequest>(value);
         WebAuthRequest oldreq = XMLHelper.GetXmlDeserialized();
         if (req.Id.Equals(oldreq.Id) && req.Challenge.Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
         {
@@ -78,7 +80,6 @@ public class LoginRequestController : Controller
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            var jwtToken = tokenHandler.WriteToken(token);
             var stringToken = tokenHandler.WriteToken(token);
 
             return Ok(stringToken);
