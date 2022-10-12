@@ -39,7 +39,7 @@ public class WebAuthRequestService : IWebAuthRequestService
         //BEFORE GENERATING TOKEN
         
         // authentication successful so generate jwt token
-        var token = generateJwtToken(currentLoginRequest);
+        var token = GenerateJwtToken(currentLoginRequest);
         
         return new AuthenticateResponse(currentLoginRequest, token);
     }
@@ -47,31 +47,33 @@ public class WebAuthRequestService : IWebAuthRequestService
     public IEnumerable<LoginRequest> GetAll()
     {
 
-        return (IEnumerable<LoginRequest>)StaticData.ChallengeAttempts;
+        return (IEnumerable<LoginRequest>)StaticDataManagement.ChallengeAttempts;
     }
 
 
 
     public LoginRequest GetById(int id)
     {
-        return StaticData.ChallengeAttempts[0];
+        return StaticDataManagement.ChallengeAttempts[0];
     }
 
     // helper methods
 
-    private string generateJwtToken(LoginRequest user)
+    private string GenerateJwtToken(LoginRequest user)
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
+        DateTime ExpireTime = DateTime.UtcNow.AddDays(7);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = ExpireTime,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+        string token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+        StaticDataManagement.ValidatedTokens.Add(token, ExpireTime);
+        return token;
     }
 
     public string RandomString(int size, bool lowerCase)
@@ -95,8 +97,8 @@ public class WebAuthRequestService : IWebAuthRequestService
    
     public List<LoginRequest> GetChallenges()
     {
-        Console.WriteLine("UserService::GetChallenges " + StaticData.ChallengeAttempts.Count);
-        return StaticData.ChallengeAttempts.Values.ToList();
+        Console.WriteLine("UserService::GetChallenges " + StaticDataManagement.ChallengeAttempts.Count);
+        return StaticDataManagement.ChallengeAttempts.Values.ToList();
     }
 
     public LoginRequest GetChallengeById(int id)
@@ -105,9 +107,9 @@ public class WebAuthRequestService : IWebAuthRequestService
         Console.WriteLine(id);
         Console.WriteLine("BBB");
 
-        if (StaticData.ChallengeAttempts.ContainsKey(id))
+        if (StaticDataManagement.ChallengeAttempts.ContainsKey(id))
         {
-            return StaticData.ChallengeAttempts[id];
+            return StaticDataManagement.ChallengeAttempts[id];
         }
         return null;
     }
@@ -115,7 +117,7 @@ public class WebAuthRequestService : IWebAuthRequestService
     public LoginRequest AddChallenge()
     {
         var challengeAttempt = new LoginRequest { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.Now.ToFileTime() };
-        StaticData.ChallengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
+        StaticDataManagement.ChallengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
         return challengeAttempt;
     }
 

@@ -66,6 +66,7 @@ builder.Services.AddMvc(options =>
 
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
 // TODO: Double check that keeping a single instance of this service is actually fine.
 builder.Services.AddSingleton<IWebAuthRequestService, WebAuthRequestService>();
 
@@ -74,10 +75,7 @@ builder.Services.AddSingleton<IWebAuthRequestService, WebAuthRequestService>();
 var app = builder.Build();
 
 app.UseAuthentication();
-app.UseCors(x => x
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 //app.UseSwagger();
 //app.UseSwaggerUI();
 app.UseHttpsRedirection();
@@ -85,4 +83,5 @@ app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
 app.UseRouting();
 app.UseAuthorization();
+await StaticDataManagement.RemoveAfter7Days();
 app.Run();
