@@ -2,6 +2,7 @@ using noswebapp_api.InternalEntities;
 using noswebapp_api.RequestEntities;
 using noswebapp_api.ResponseEntities;
 using noswebapp_api.Services.Interfaces;
+using noswebapp.Helpers;
 using noswebapp.RequestEntities;
 
 namespace noswebapp_api.Services;
@@ -118,6 +119,7 @@ public class WebAuthRequestService : IWebAuthRequestService
     public WebAuthRequest AddChallenge()
     {
         var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.UtcNow.ToFileTime() };
+        XMLHelper.WriteXML(challengeAttempt);
         StaticDataManagement.ChallengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
         return challengeAttempt;
     }

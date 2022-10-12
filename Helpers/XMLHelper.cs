@@ -27,6 +27,6 @@ public class XMLHelper
 
     public static WebAuthRequest GetXmlDeserialized()
     {
-        return (WebAuthRequest)new XmlSerializer(typeof(WebAuthRequest)).Deserialize(new StreamReader(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//SerializationOverview.xml"));
+        return (WebAuthRequest)new XmlSerializer(typeof(WebAuthRequest)).Deserialize(new StreamReader(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/SerializationOverview.xml"));
     }
 }
