@@ -19,7 +19,6 @@ using noswebapp_api.Extensions;
 using noswebapp_api.Helpers;
 using noswebapp_api.InternalEntities;
 using noswebapp_api.Services.Interfaces;
-using noswebapp.Helpers;
 using noswebapp.RequestEntities;
 using WingsAPI.Communication;
 
@@ -55,37 +54,43 @@ public class LoginRequestController : Controller
     [HttpPost("CreateToken")]
     public ActionResult CreateToken([FromBody] WebAuthRequest req)
     {
-        WebAuthRequest oldreq = XMLHelper.GetXmlDeserialized();
-        if (req.Id.Equals(oldreq.Id) && req.Challenge.DecryptWithPrivateKey().Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
+        if (StaticDataManagement.ChallengeAttempts.ContainsKey(req.Id))
         {
-            StaticDataManagement.ChallengeAttempts = new();
-            string issuer = NosWebAppEnvVariables.JwtIssuer;
-            string audience = NosWebAppEnvVariables.JwtAudience;
-            byte[] key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            WebAuthRequest oldreq = null;
+            StaticDataManagement.ChallengeAttempts.TryGetValue(req.Id, out oldreq);
+            if (oldreq != null)
             {
-                Subject = new ClaimsIdentity(new[]
+                if (req.Id.Equals(oldreq.Id) && req.Challenge.DecryptWithPrivateKey().Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
                 {
-                    new Claim("Id", Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, oldreq.Id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Jti,
-                        Guid.NewGuid().ToString())
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
-                Issuer = issuer,
-                Audience = audience,
-                SigningCredentials = new SigningCredentials
-                (new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha512Signature)
-            };
-            var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            var stringToken = tokenHandler.WriteToken(token);
+                    StaticDataManagement.ChallengeAttempts = new();
+                    string issuer = NosWebAppEnvVariables.JwtIssuer;
+                    string audience = NosWebAppEnvVariables.JwtAudience;
+                    byte[] key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new[]
+                        {
+                            new Claim("Id", Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Sub, oldreq.Id.ToString()),
+                            new Claim(JwtRegisteredClaimNames.Jti,
+                                Guid.NewGuid().ToString())
+                        }),
+                        Expires = DateTime.UtcNow.AddMinutes(5),
+                        Issuer = issuer,
+                        Audience = audience,
+                        SigningCredentials = new SigningCredentials
+                        (new SymmetricSecurityKey(key),
+                            SecurityAlgorithms.HmacSha512Signature)
+                    };
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+                    var stringToken = tokenHandler.WriteToken(token);
 
-            return Ok(stringToken);
-
-
+                    return Ok(stringToken);
+                }
+            }
         }
+        
         String message = "401 NOT AUTHORIZED";
         return Unauthorized(message);
     }

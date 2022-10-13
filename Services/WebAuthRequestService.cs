@@ -2,11 +2,7 @@ using noswebapp_api.InternalEntities;
 using noswebapp_api.RequestEntities;
 using noswebapp_api.ResponseEntities;
 using noswebapp_api.Services.Interfaces;
-using noswebapp.Helpers;
 using noswebapp.RequestEntities;
-
-namespace noswebapp_api.Services;
-
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using noswebapp_api.Helpers;
@@ -17,6 +13,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+
+namespace noswebapp_api.Services;
 
 public class WebAuthRequestService : IWebAuthRequestService
 // TODO: Remove all the logging.
@@ -119,7 +117,6 @@ public class WebAuthRequestService : IWebAuthRequestService
     public WebAuthRequest AddChallenge()
     {
         var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.UtcNow.ToFileTime() };
-        XMLHelper.WriteXML(challengeAttempt);
         StaticDataManagement.ChallengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
         return challengeAttempt;
     }
