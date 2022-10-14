@@ -1,10 +1,14 @@
 ﻿using System;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
 using noswebapp_api.Attributes;
+using noswebapp_api.RequestEntities;
 using WingsAPI.Communication;
+using WingsAPI.Communication.DbServer.CharacterService;
+using WingsAPI.Data.Character;
 
 namespace noswebapp.Controllers;
 
@@ -25,87 +29,111 @@ public class CharacterController : Controller
     
     [Authorize]
     [HttpPost("SaveCharacters")]
-    public BasicRpcResponse SaveCharacters()
+    public DbServerSaveCharactersResponse SaveCharacters(DbServerSaveCharactersRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().SaveCharacters(Req).Result;
     }
 
     [Authorize]
     [HttpPost("SaveCharacter")]
-    public BasicRpcResponse SaveCharacter()
+    public DbServerSaveCharacterResponse SaveCharacter(DbServerSaveCharacterRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().SaveCharacter(Req).Result;
     }
 
     [Authorize]
     [HttpPost("CreateCharacter")]
-    public BasicRpcResponse CreateCharacter()
+    public DbServerSaveCharacterResponse CreateCharacter(DbServerSaveCharacterRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().CreateCharacter(Req).Result;
     }
 
     [Authorize]
     [HttpGet("GetCharacters")]
-    public BasicRpcResponse GetCharaters()
+    public DbServerGetCharactersResponse GetCharaters(OnlyAnLongRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().GetCharacters(new()
+        {
+            AccountId = Req.Value
+        }).Result;
     }
 
     [Authorize]
     [HttpGet("GetCharacterBySlot")]
-    public BasicRpcResponse GetCharacterBySlot()
+    public DbServerGetCharacterResponse GetCharacterBySlot(DbServerGetCharacterFromSlotRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().GetCharacterBySlot(Req).Result;
     }
 
     [Authorize]
     [HttpGet("GetCharacterById")]
-    public BasicRpcResponse GetCharacterById()
+    public DbServerGetCharacterResponse GetCharacterById(DbServerGetCharacterByIdRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().GetCharacterById(Req).Result;
     }
 
     [Authorize]
-    [HttpGet("SaveCharacters")]
-    public BasicRpcResponse GetCharacterByName()
+    [HttpGet("GetCharacterByName")]
+    public DbServerGetCharacterResponse GetCharacterByName(OnlyAnStringRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().GetCharacterByName(new()
+        {
+            CharacterName = Req.Value
+        }).Result;
     }
 
     [Authorize]
     [HttpPost("FlushCharacterSaves")]
-    public BasicRpcResponse FlushCharacterSaves()
+    public DbServerFlushCharacterSavesResponse FlushCharacterSaves()
     {
-        return null;
+        return _container.GetService<ICharacterService>().FlushCharacterSaves(new()).Result;
     }
 
     [Authorize]
-    public BasicRpcResponse DeleteCharacter()
+    [HttpPost("DeleteCharacter")]
+    public DbServerDeleteCharacterResponse DeleteCharacter(CharacterDTO dto)
     {
-        return null;
+        return _container.GetService<ICharacterService>().DeleteCharacter(new()
+        {
+            CharacterDto = dto
+        }).Result;
     }
 
     [Authorize]
-    public BasicRpcResponse ForceRemoveCharacterFromCache()
+    [HttpPost("ForceRemoveCharacterFromCache")]
+    public DbServerGetCharacterResponse ForceRemoveCharacterFromCache(OnlyAnStringRequest Req)
     {
-        return null;
+        return _container.GetService<ICharacterService>().ForceRemoveCharacterFromCache(new()
+        {
+            CharacterName = Req.Value
+        }).Result;
     }
 
     [Authorize]
-    public BasicRpcResponse GetTopPoints()
+    [HttpPost("GetTopPoints")]
+    public CharacterGetTopResponse GetTopPoints()
     {
-        return null;
+        return _container.GetService<ICharacterService>().GetTopPoints(new()).Result;
     }
 
     [Authorize]
-    public BasicRpcResponse GetTopReputation()
+    [HttpPost("GetTopReputation")]
+    public CharacterGetTopResponse GetTopReputation()
     {
-        return null;
+        return _container.GetService<ICharacterService>().GetTopReputation(new()).Result;
     }
 
     [Authorize]
-    public BasicRpcResponse RefreshRanking()
+    [HttpPost("GetTopCompliment")]
+    public CharacterGetTopResponse GetTopCompliment()
     {
-        return null;
+        return _container.GetService<ICharacterService>().GetTopCompliment(new()).Result;
+    }
+    
+    [Authorize]
+    [HttpPost("RefreshRanking")]
+    public CharacterRefreshRankingResponse RefreshRanking()
+    {
+        return _container.GetService<ICharacterService>().RefreshRanking(new()).Result;
     }
 }
