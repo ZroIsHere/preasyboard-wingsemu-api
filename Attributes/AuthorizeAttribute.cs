@@ -1,4 +1,3 @@
-using noswebapp_api.InternalEntities;
 using noswebapp.RequestEntities;
 
 namespace noswebapp_api.Attributes;

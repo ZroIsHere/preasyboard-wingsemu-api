@@ -1,11 +1,11 @@
-using noswebapp_api.InternalEntities;
+
 using noswebapp_api.RequestEntities;
 using noswebapp_api.ResponseEntities;
 using noswebapp_api.Services.Interfaces;
 using noswebapp.RequestEntities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using noswebapp_api.Helpers;
+using noswebapp_api.Managers;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,25 +13,23 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using noswebapp_api.Configuration;
 using noswebapp_api.Extensions;
 
 namespace noswebapp_api.Services;
 
-public class WebAuthRequestService : IWebAuthRequestService
+public class WebAuthService : IWebAuthService
 // TODO: Remove all the logging.
 {
-    private readonly AppSettings _appSettings;
     private readonly Random _random;
     public static Dictionary<int, WebAuthRequest> _challengeAttempts = new();
 
-    public WebAuthRequestService(IOptions<AppSettings> appSettings)
+    public WebAuthService()
     {
-        _appSettings = appSettings.Value;
         _random = new Random();
-
     }
 
-    public AuthenticateResponse Authenticate(AuthenticateRequest authReq)
+    public WebAuthResponse Authenticate(AuthenticateRequest authReq)
     {
 
         WebAuthRequest currentWebAuthRequest = GetChallengeById(authReq.Id);
@@ -43,10 +41,10 @@ public class WebAuthRequestService : IWebAuthRequestService
 
             if (oldreq != null)
             {
-                if (authReq.Id.Equals(oldreq.Id) && DecryptionUtils.DecryptWithPublicKey(authReq.Challenge).Equals(oldreq.Challenge))
+                if (authReq.Id.Equals(oldreq.Id) && authReq.Challenge.DecryptWithPublicKey().Equals(oldreq.Challenge))
                 {
                     var token = GenerateJwtToken(currentWebAuthRequest);
-                    return new AuthenticateResponse(currentWebAuthRequest, token);
+                    return new WebAuthResponse(currentWebAuthRequest, token);
                 }
             }
         }
@@ -68,8 +66,6 @@ public class WebAuthRequestService : IWebAuthRequestService
     {
         return _challengeAttempts[id];
     }
-
-    // helper methods
 
     private string GenerateJwtToken(WebAuthRequest req)
     {

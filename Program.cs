@@ -22,9 +22,9 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reactive.Linq;
 using Microsoft.AspNetCore.Http;
-using noswebapp_api.Helpers;
+using noswebapp_api.Managers;
 using noswebapp_api.InputFormatters;
-using noswebapp_api.InternalEntities;
+
 using noswebapp_api.Services;
 using noswebapp_api.Services.Interfaces;
 
@@ -67,10 +67,9 @@ builder.Services.AddMvc(options =>
 });
 
 builder.WebHost.UseUrls("http://0.0.0.0:21487/");
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // TODO: Double check that keeping a single instance of this service is actually fine.
-builder.Services.AddSingleton<IWebAuthRequestService, WebAuthRequestService>();
+builder.Services.AddSingleton<IWebAuthService, WebAuthService>();
 
 
 
@@ -81,7 +80,7 @@ app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 //app.UseSwagger();
 //app.UseSwaggerUI();
 app.UseHttpsRedirection();
-app.UseMiddleware<JwtMiddleware>();
+app.UseMiddleware<JwtManager>();
 app.MapControllers();
 app.UseRouting();
 app.UseAuthorization();

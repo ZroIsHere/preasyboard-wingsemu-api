@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.Attributes;
 using noswebapp_api.RequestEntities;
 using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
@@ -24,33 +25,24 @@ public class MailController : Controller
         _container = container;
     }
 
+    [Authorize]
     [HttpPost("CreateMail")]
-    public CreateMailResponse CreateMailAsync([FromHeader] string AuthKey, CreateMailRequest req)
+    public CreateMailResponse CreateMailAsync(CreateMailRequest req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IMailService>().CreateMailAsync(req).Result;
     }
     
+    [Authorize]
     [HttpPost("CreateMailBatch")]
-    public CreateMailBatchResponse CreateMailBatchAsync([FromHeader] string AuthKey, CreateMailBatchRequest req)
+    public CreateMailBatchResponse CreateMailBatchAsync(CreateMailBatchRequest req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IMailService>().CreateMailBatchAsync(req).Result;
     }
     
+    [Authorize]
     [HttpGet("RemoveMail")]
-    public BasicRpcResponse RemoveMailAsync([FromHeader] string AuthKey, RemoveMailRequest Req)
+    public BasicRpcResponse RemoveMailAsync(RemoveMailRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IMailService>().RemoveMailAsync(new()
         {
             CharacterId = Req.CharacterId,
@@ -58,13 +50,10 @@ public class MailController : Controller
         }).Result;
     }
 
+    [Authorize]
     [HttpGet("GetMailsByCharacterId")]
-    public GetMailsResponse GetMailsByCharacterId([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public GetMailsResponse GetMailsByCharacterId(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IMailService>().GetMailsByCharacterId(new()
         {
             CharacterId = Req.Value

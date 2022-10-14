@@ -16,8 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using noswebapp_api;
 using noswebapp_api.Attributes;
 using noswebapp_api.Extensions;
-using noswebapp_api.Helpers;
-using noswebapp_api.InternalEntities;
+using noswebapp_api.Managers;
 using noswebapp_api.Services.Interfaces;
 using noswebapp.RequestEntities;
 using WingsAPI.Communication;
@@ -28,13 +27,13 @@ namespace noswebapp_api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LoginRequestController : ControllerBase
+public class WebAuthController : ControllerBase
 {
     private readonly IServiceProvider _container;
-    private IWebAuthRequestService _webAuthRequestService;
-    private readonly ILogger<LoginRequestController> _logger;
+    private IWebAuthService _webAuthRequestService;
+    private readonly ILogger<WebAuthController> _logger;
 
-    public LoginRequestController(ILogger<LoginRequestController> logger, IServiceProvider container, IWebAuthRequestService webAuthRequestService)
+    public WebAuthController(ILogger<WebAuthController> logger, IServiceProvider container, IWebAuthService webAuthRequestService)
     {
         _logger = logger;
         _container = container;
@@ -45,8 +44,6 @@ public class LoginRequestController : ControllerBase
     [HttpGet("LoginRequest")]
     public WebAuthRequest LoginRequest()
     {
-        //return _container.GetService<IWebAuthRequestService>().AddChallenge();
-
         return _webAuthRequestService.AddChallenge();
     }
 
@@ -63,15 +60,13 @@ public class LoginRequestController : ControllerBase
 
         return _webAuthRequestService.GetChallengeById(id);
     }
+    
     [Authorize]
     [HttpGet("GetMessage")]
     public JsonResult GetMessage()
     {
         return  new JsonResult(new { message = "Authorized and ready to communicate" }) { StatusCode = StatusCodes.Status200OK }; ;
-      
     }
-
-    
 
     [HttpPost("Auth")]
     public IActionResult Authenticate(AuthenticateRequest loginReq)
@@ -82,8 +77,4 @@ public class LoginRequestController : ControllerBase
             return BadRequest(new { message = "Challenge not valid" });
         return Ok(response);
     }
-
-    
-
-   
 }

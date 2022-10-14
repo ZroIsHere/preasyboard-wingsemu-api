@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.Attributes;
 using WingsAPI.Communication;
 
 namespace noswebapp.Controllers;
@@ -22,122 +23,89 @@ public class CharacterController : Controller
         _container = container;
     }
     
+    [Authorize]
     [HttpPost("SaveCharacters")]
-    public BasicRpcResponse SaveCharacters([FromHeader] string AuthKey)
+    public BasicRpcResponse SaveCharacters()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse SaveCharacter([FromHeader] string AuthKey)
+    [Authorize]
+    [HttpPost("SaveCharacter")]
+    public BasicRpcResponse SaveCharacter()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse CreateCharacter([FromHeader] string AuthKey)
+    [Authorize]
+    [HttpPost("CreateCharacter")]
+    public BasicRpcResponse CreateCharacter()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse GetCharaters([FromHeader] string AuthKey)
+    [Authorize]
+    [HttpGet("GetCharacters")]
+    public BasicRpcResponse GetCharaters()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse GetCharacterBySlot([FromHeader] string AuthKey)
+    [Authorize]
+    [HttpGet("GetCharacterBySlot")]
+    public BasicRpcResponse GetCharacterBySlot()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse GetCharacterById([FromHeader] string AuthKey)
+    [Authorize]
+    [HttpGet("GetCharacterById")]
+    public BasicRpcResponse GetCharacterById()
     {
-        new StreamReader(Request.Body).ReadToEnd();
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse GetCharacterByName([FromHeader] string AuthKey)
+    [Authorize]
+    [HttpGet("SaveCharacters")]
+    public BasicRpcResponse GetCharacterByName()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse FlushCharacterSaves([FromHeader] string AuthKey)
+    [Authorize]
+    [HttpPost("FlushCharacterSaves")]
+    public BasicRpcResponse FlushCharacterSaves()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse DeleteCharacter([FromHeader] string AuthKey)
+    [Authorize]
+    public BasicRpcResponse DeleteCharacter()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse ForceRemoveCharacterFromCache([FromHeader] string AuthKey)
+    [Authorize]
+    public BasicRpcResponse ForceRemoveCharacterFromCache()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse GetTopPoints([FromHeader] string AuthKey)
+    [Authorize]
+    public BasicRpcResponse GetTopPoints()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse GetTopReputation([FromHeader] string AuthKey)
+    [Authorize]
+    public BasicRpcResponse GetTopReputation()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 
-    public BasicRpcResponse RefreshRanking([FromHeader] string AuthKey)
+    [Authorize]
+    public BasicRpcResponse RefreshRanking()
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return null;
     }
 }

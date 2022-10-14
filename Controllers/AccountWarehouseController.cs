@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.Attributes;
 using noswebapp_api.RequestEntities;
 using WingsAPI.Communication.DbServer.AccountService;
 using WingsAPI.Communication.DbServer.WarehouseService;
@@ -25,64 +26,44 @@ public class AccountWarehouseController : Controller
         _container = container;
     }
     
+    [Authorize]
     [HttpGet("GetItems")]
-    public AccountWarehouseGetItemsResponse GetItems([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public AccountWarehouseGetItemsResponse GetItems(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-        
         return _container.GetService<IAccountWarehouseService>().GetItems(new()
         {
             AccountId = Req.Value
         }).Result;
     }
     
+    [Authorize]
     [HttpGet("GetItem")]
-    public AccountWarehouseGetItemResponse GetItem([FromHeader] string AuthKey, AccountWarehouseGetItemRequest Req)
+    public AccountWarehouseGetItemResponse GetItem(AccountWarehouseGetItemRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-        
         return _container.GetService<IAccountWarehouseService>().GetItem(Req).Result;
     }
     
+    [Authorize]
     [HttpGet("AddItem")]
-    public AccountWarehouseAddItemResponse AddItem([FromHeader] string AuthKey, AccountWarehouseItemDto Dto)
+    public AccountWarehouseAddItemResponse AddItem(AccountWarehouseItemDto Dto)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-        
         return _container.GetService<IAccountWarehouseService>().AddItem(new()
         {
             Item = Dto
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("WithdrawItem")]
-    public AccountWarehouseWithdrawItemResponse WithdrawItem([FromHeader] string AuthKey, AccountWarehouseWithdrawItemRequest Req)
+    public AccountWarehouseWithdrawItemResponse WithdrawItem(AccountWarehouseWithdrawItemRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-        
         return _container.GetService<IAccountWarehouseService>().WithdrawItem(Req).Result;
     }
     
+    [Authorize]
     [HttpPost("MoveItem")]
-    public AccountWarehouseMoveItemResponse MoveItem([FromHeader] string AuthKey, AccountWarehouseMoveItemRequest Req)
+    public AccountWarehouseMoveItemResponse MoveItem(AccountWarehouseMoveItemRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-        
         return _container.GetService<IAccountWarehouseService>().MoveItem(Req).Result;
     }
 }

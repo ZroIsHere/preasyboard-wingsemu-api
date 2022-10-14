@@ -1,4 +1,3 @@
-using noswebapp_api.InternalEntities;
 using noswebapp_api.RequestEntities;
 using noswebapp_api.Services.Interfaces;
 using noswebapp.RequestEntities;
@@ -6,7 +5,7 @@ using noswebapp.RequestEntities;
 namespace noswebapp_api;
 
 using Microsoft.AspNetCore.Mvc;
-using noswebapp_api.Helpers;
+using noswebapp_api.Managers;
 using noswebapp_api.Services;
 
 using System.Web.Mvc;
@@ -22,9 +21,9 @@ using Microsoft.AspNetCore.Http;
 [Route("[controller]")]
 public class LoginRequestsController : ControllerBase
 {
-    private IWebAuthRequestService _loginRequestService;
+    private IWebAuthService _loginRequestService;
 
-    public LoginRequestsController(IWebAuthRequestService loginRequestService)
+    public LoginRequestsController(IWebAuthService loginRequestService)
     {
         _loginRequestService = loginRequestService;
     }

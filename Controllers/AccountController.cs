@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.Attributes;
 using noswebapp_api.RequestEntities;
 using PhoenixLib.Extensions;
 using Plugin.Database.DB;
@@ -32,105 +33,81 @@ public class AccountController : Controller
         _logger = logger;
         _container = container;
     }
-
+    
+    [Authorize]
     [HttpGet("LoadAccountByName")]
-    public AccountLoadResponse LoadAccountByName([FromHeader] string AuthKey, OnlyAnStringRequest Req)
+    public AccountLoadResponse LoadAccountByName(OnlyAnStringRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IAccountService>().LoadAccountByName(new()
         {
             Name = Req.Value
         }).Result;
     }
     
+    [Authorize]
     [HttpGet("LoadAccountById")]
-    public AccountLoadResponse LoadAccountById([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public AccountLoadResponse LoadAccountById(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IAccountService>().LoadAccountById(new()
         {
             AccountId = Req.Value
         }).Result;
     }
 
+    [Authorize]
     [HttpPost("SaveAccount")]
-    public AccountSaveResponse SaveAccount([FromHeader] string AuthKey, AccountDTO dto)
+    public AccountSaveResponse SaveAccount(AccountDTO dto)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IAccountService>().SaveAccount(new()
         {
             AccountDto = dto
         }).Result;
     }
 
+    [Authorize]
     [HttpGet("GetAccountBan")]
-    public AccountBanGetResponse GetAccountBan([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public AccountBanGetResponse GetAccountBan(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IAccountService>().GetAccountBan(new()
         {
             AccountId = Req.Value
         }).Result;
     }
 
+    [Authorize]
     [HttpPost("SaveAccountBan")]
-    public AccountBanSaveResponse SaveAccountBan([FromHeader] string AuthKey, AccountBanDto dto)
+    public AccountBanSaveResponse SaveAccountBan(AccountBanDto dto)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IAccountService>().SaveAccountBan(new()
         {
             AccountBanDto = dto
         }).Result;
     }
 
+    [Authorize]
     [HttpGet("GetAccountPenalties")]
-    public AccountPenaltyGetAllResponse GetAccountPenalties([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public AccountPenaltyGetAllResponse GetAccountPenalties(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IAccountService>().GetAccountPenalties(new()
         {
             AccountId = Req.Value
         }).Result;
     }
 
+    [Authorize]
     [HttpPost("SaveAccountPenalties")]
-    public AccountPenaltyMultiSaveResponse SaveAccountPenalties([FromHeader] string AuthKey, List<AccountPenaltyDto> list)
+    public AccountPenaltyMultiSaveResponse SaveAccountPenalties(List<AccountPenaltyDto> list)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         return _container.GetService<IAccountService>().SaveAccountPenalties(new()
         {
             AccountPenaltyDtos = list
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("CreateAccount")]
-    public BasicRpcResponse CreateAccount([FromHeader] string AuthKey, CreateAccountRequest Req)
+    public BasicRpcResponse CreateAccount(CreateAccountRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
         using GameContext dbcontext = _container.GetRequiredService<IDbContextFactory<GameContext>>().CreateDbContext();
         if (dbcontext.Account.Any(s => s.Name.Equals(Req.AcccountName)))
         {

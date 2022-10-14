@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using noswebapp_api;
+using noswebapp_api.Attributes;
 using noswebapp_api.RequestEntities;
 using WingsAPI.Communication.Bazaar;
 using WingsEmu.Game.Algorithm;
@@ -25,28 +26,20 @@ public class BazaarController : Controller
         _container = container;
     }
     
+    [Authorize]
     [HttpGet("GetBazaarItemById")]
-    public BazaarItemResponse GetBazaarItemById([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public BazaarItemResponse GetBazaarItemById(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().GetBazaarItemById(new()
         {
             BazaarItemId = Req.Value
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("AddItemToBazaar")]
-    public BazaarItemResponse AddItemToBazaar([FromHeader] string AuthKey, AddItemToBazaarRequest Req)
+    public BazaarItemResponse AddItemToBazaar(AddItemToBazaarRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().AddItemToBazaar(new()
         {
             ChannelId = 1,
@@ -56,14 +49,10 @@ public class BazaarController : Controller
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("RemoveItemFromBazaar")]
-    public BazaarItemResponse RemoveItemFromBazaar([FromHeader] string AuthKey, RemoveItemFromBazaarRequest Req)
+    public BazaarItemResponse RemoveItemFromBazaar(RemoveItemFromBazaarRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().RemoveItemFromBazaar(new()
         {
             ChannelId = 1,
@@ -72,14 +61,10 @@ public class BazaarController : Controller
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("ChangeItemPriceFromBazaar")]
-    public BazaarItemResponse ChangeItemPriceFromBazaar([FromHeader] string AuthKey, ChangeItemPriceFromBazaarRequest Req)
+    public BazaarItemResponse ChangeItemPriceFromBazaar(ChangeItemPriceFromBazaarRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().ChangeItemPriceFromBazaar(new()
         {
             ChannelId = 1,
@@ -91,81 +76,57 @@ public class BazaarController : Controller
         }).Result;
     }
     
+    [Authorize]
     [HttpGet("GetItemsByCharacterIdFromBazaar")]
-    public BazaarGetItemsByCharIdResponse GetItemsByCharacterIdFromBazaar([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public BazaarGetItemsByCharIdResponse GetItemsByCharacterIdFromBazaar(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().GetItemsByCharacterIdFromBazaar(new()
         {
             CharacterId = Req.Value
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("RemoveItemsByCharacterIdFromBazaar")]
-    public BazaarRemoveItemsByCharIdResponse RemoveItemsByCharacterIdFromBazaar([FromHeader] string AuthKey, OnlyAnLongRequest Req)
+    public BazaarRemoveItemsByCharIdResponse RemoveItemsByCharacterIdFromBazaar(OnlyAnLongRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().RemoveItemsByCharacterIdFromBazaar(new()
         {
             CharacterId = Req.Value
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("RemoveItemsByCharacterIdFromBazaar")]
-    public BazaarSearchBazaarItemsResponse SearchBazaarItems([FromHeader] string AuthKey, BazaarSearchContext Req)
+    public BazaarSearchBazaarItemsResponse SearchBazaarItems(BazaarSearchContext Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().SearchBazaarItems(new()
         {
             BazaarSearchContext = Req
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("BuyItemFromBazaar")]
-    public BazaarItemResponse BuyItemFromBazaar([FromHeader] string AuthKey, BazaarBuyItemRequest Req)
+    public BazaarItemResponse BuyItemFromBazaar(BazaarBuyItemRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().BuyItemFromBazaar(Req).Result;
     }
     
+    [Authorize]
     [HttpPost("UnlistItemsFromBazaarWithVnum")]
-    public UnlistItemFromBazaarResponse UnlistItemsFromBazaarWithVnumAsync([FromHeader] string AuthKey, List<OnlyAnIntRequest> Req)
+    public UnlistItemFromBazaarResponse UnlistItemsFromBazaarWithVnumAsync(List<OnlyAnIntRequest> Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().UnlistItemsFromBazaarWithVnumAsync(new()
         {
             Vnum = Req.Select(s => s.Value).ToList()
         }).Result;
     }
     
+    [Authorize]
     [HttpPost("UnlistCharacterItemsFromBazaar")]
-    public UnlistItemFromBazaarResponse UnlistCharacterItemsFromBazaarAsync([FromHeader] string AuthKey, OnlyAnIntRequest Req)
+    public UnlistItemFromBazaarResponse UnlistCharacterItemsFromBazaarAsync(OnlyAnIntRequest Req)
     {
-        if (!AuthKey.Equals(NosWebAppEnvVariables.AuthKey))
-        {
-            return null;
-        }
-
         return _container.GetService<IBazaarService>().UnlistCharacterItemsFromBazaarAsync(new()
         {
             Id = Req.Value
