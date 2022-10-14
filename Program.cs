@@ -59,8 +59,8 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-//app.UseSwagger();
-//app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseMiddleware<JwtManager>();
 app.MapControllers();
