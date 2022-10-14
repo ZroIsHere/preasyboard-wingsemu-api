@@ -6,6 +6,7 @@ namespace noswebapp_api.Configuration;
 
 public class NosWebAppEnvVariables
 {
+    private static string _WebApiUrl = "";
     static string _EncryptionKey = "";
     static string _JwtIssuer = "";
     static string _JwtAudience = "";
@@ -65,6 +66,19 @@ public class NosWebAppEnvVariables
             }
 
             return _JwtKey;
+        }
+    }
+
+    public static string WebApiUrl
+    {
+        get
+        {
+            if (string.IsNullOrEmpty(_WebApiUrl))
+            {
+                _WebApiUrl = Environment.GetEnvironmentVariable("WEB_API_URL") ?? "http://0.0.0.0:21487/";
+            }
+
+            return _WebApiUrl;
         }
     }
 }

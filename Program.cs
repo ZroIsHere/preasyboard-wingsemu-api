@@ -22,6 +22,8 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reactive.Linq;
 using Microsoft.AspNetCore.Http;
+using noswebapp_api.Configuration;
+using noswebapp_api.Controllers;
 using noswebapp_api.Managers;
 using noswebapp_api.InputFormatters;
 
@@ -37,9 +39,7 @@ if (!File.Exists(envfile))
     envfile = "../../" + envfile;
 }
 DotEnv.Load(new DotEnvOptions(true, new[] { envfile }, Encoding.UTF8));
-// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServerApiServiceClient();
@@ -53,20 +53,13 @@ builder.Services.AddGrpcFamilyServiceClient();
 builder.Services.AddGrpcMailServiceClient();
 builder.Services.AddGrpcDbServerServiceClient();
 builder.Services.AddTransient<IDependencyInjectorPlugin, DatabasePlugin>();
-builder.Services.AddTransient(typeof(AccountController));
-builder.Services.AddTransient(typeof(MailController));
-builder.Services.AddTransient(typeof(NoteController));
-builder.Services.AddTransient(typeof(BazaarController));
-builder.Services.AddTransient(typeof(AccountWarehouseController));
-builder.Services.AddTransient(typeof(CharacterController));
-builder.Services.AddTransient(typeof(LoginRequestsController));
 new DatabasePlugin().AddDependencies(builder.Services);
 builder.Services.AddMvc(options =>
 {
     options.InputFormatters.Insert(0, new RawBodyInputFormatter());
 });
 
-builder.WebHost.UseUrls("http://0.0.0.0:21487/");
+builder.WebHost.UseUrls(NosWebAppEnvVariables.WebApiUrl);
 
 // TODO: Double check that keeping a single instance of this service is actually fine.
 builder.Services.AddSingleton<IWebAuthService, WebAuthService>();
