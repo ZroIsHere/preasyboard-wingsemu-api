@@ -22,14 +22,14 @@ public class ItemsController : Controller
     }
     
     [Authorize]
-    [HttpPost("GetAll")]
+    [HttpGet("GetAll")]
     public List<ItemDTO> GetAll()
     {
         return _cachedItems.ToList();
     }
     
     [Authorize]
-    [HttpPost("GetByVnum")]
+    [HttpGet("GetByVnum")]
     public ItemDTO GetByVnum(OnlyAnIntRequest Req)
     {
         return _cachedItems.FirstOrDefault(s=> s.Id.Equals(Req.Value));

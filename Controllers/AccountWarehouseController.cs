@@ -44,7 +44,7 @@ public class AccountWarehouseController : Controller
     }
     
     [Authorize]
-    [HttpGet("AddItem")]
+    [HttpPost("AddItem")]
     public AccountWarehouseAddItemResponse AddItem(AccountWarehouseItemDto Dto)
     {
         return _container.GetService<IAccountWarehouseService>().AddItem(new()

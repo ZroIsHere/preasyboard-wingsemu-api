@@ -97,7 +97,7 @@ public class BazaarController : Controller
     }
     
     [Authorize]
-    [HttpPost("RemoveItemsByCharacterIdFromBazaar")]
+    [HttpGet("SearchBazaarItems")]
     public BazaarSearchBazaarItemsResponse SearchBazaarItems(BazaarSearchContext Req)
     {
         return _container.GetService<IBazaarService>().SearchBazaarItems(new()

@@ -40,7 +40,7 @@ public class MailController : Controller
     }
     
     [Authorize]
-    [HttpGet("RemoveMail")]
+    [HttpPost("RemoveMail")]
     public BasicRpcResponse RemoveMailAsync(RemoveMailRequest Req)
     {
         return _container.GetService<IMailService>().RemoveMailAsync(new()

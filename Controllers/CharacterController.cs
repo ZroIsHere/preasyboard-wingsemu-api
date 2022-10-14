@@ -110,28 +110,28 @@ public class CharacterController : Controller
     }
 
     [Authorize]
-    [HttpPost("GetTopPoints")]
+    [HttpGet("GetTopPoints")]
     public CharacterGetTopResponse GetTopPoints()
     {
         return _container.GetService<ICharacterService>().GetTopPoints(new()).Result;
     }
 
     [Authorize]
-    [HttpPost("GetTopReputation")]
+    [HttpGet("GetTopReputation")]
     public CharacterGetTopResponse GetTopReputation()
     {
         return _container.GetService<ICharacterService>().GetTopReputation(new()).Result;
     }
 
     [Authorize]
-    [HttpPost("GetTopCompliment")]
+    [HttpGet("GetTopCompliment")]
     public CharacterGetTopResponse GetTopCompliment()
     {
         return _container.GetService<ICharacterService>().GetTopCompliment(new()).Result;
     }
     
     [Authorize]
-    [HttpPost("RefreshRanking")]
+    [HttpGet("RefreshRanking")]
     public CharacterRefreshRankingResponse RefreshRanking()
     {
         return _container.GetService<ICharacterService>().RefreshRanking(new()).Result;
