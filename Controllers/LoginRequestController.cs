@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
@@ -21,77 +21,69 @@ using noswebapp_api.InternalEntities;
 using noswebapp_api.Services.Interfaces;
 using noswebapp.RequestEntities;
 using WingsAPI.Communication;
+using noswebapp_api.RequestEntities;
+using System.Collections.Generic;
 
 namespace noswebapp_api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LoginRequestController : Controller
+public class LoginRequestController : ControllerBase
 {
     private readonly IServiceProvider _container;
-    
+    private IWebAuthRequestService _webAuthRequestService;
     private readonly ILogger<LoginRequestController> _logger;
 
-    public LoginRequestController(ILogger<LoginRequestController> logger, IServiceProvider container)
+    public LoginRequestController(ILogger<LoginRequestController> logger, IServiceProvider container, IWebAuthRequestService webAuthRequestService)
     {
         _logger = logger;
         _container = container;
+        _webAuthRequestService = webAuthRequestService;
+
     }
     
     [HttpGet("LoginRequest")]
     public WebAuthRequest LoginRequest()
     {
-        return _container.GetService<IWebAuthRequestService>().AddChallenge();
+        //return _container.GetService<IWebAuthRequestService>().AddChallenge();
+
+        return _webAuthRequestService.AddChallenge();
     }
 
+    [HttpGet("AllReqs")]
+    public List<WebAuthRequest> AllReqs()
+    {
+
+        return _webAuthRequestService.GetChallenges();
+    }
+
+    [HttpGet("Byid")]
+    public WebAuthRequest AllReqs([FromQuery] int id)
+    {
+
+        return _webAuthRequestService.GetChallengeById(id);
+    }
     [Authorize]
     [HttpGet("GetMessage")]
-    public ActionResult GetMessage()
+    public JsonResult GetMessage()
     {
-        return Ok("Hello World");
+        return  new JsonResult(new { message = "Authorized and ready to communicate" }) { StatusCode = StatusCodes.Status200OK }; ;
+      
     }
 
-    [HttpPost("CreateToken")]
-    public ActionResult CreateToken([FromBody] WebAuthRequest req)
-    {
-        if (StaticDataManagement.ChallengeAttempts.ContainsKey(req.Id))
-        {
-            WebAuthRequest oldreq = null;
-            StaticDataManagement.ChallengeAttempts.TryGetValue(req.Id, out oldreq);
-            if (oldreq != null)
-            {
-                if (req.Id.Equals(oldreq.Id) && req.Challenge.DecryptWithPrivateKey().Equals(oldreq.Challenge) &&  oldreq.TimeStamp < DateTime.UtcNow.ToFileTime())
-                {
-                    StaticDataManagement.ChallengeAttempts = new();
-                    string issuer = NosWebAppEnvVariables.JwtIssuer;
-                    string audience = NosWebAppEnvVariables.JwtAudience;
-                    byte[] key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
-                    var tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Subject = new ClaimsIdentity(new[]
-                        {
-                            new Claim("Id", Guid.NewGuid().ToString()),
-                            new Claim(JwtRegisteredClaimNames.Sub, oldreq.Id.ToString()),
-                            new Claim(JwtRegisteredClaimNames.Jti,
-                                Guid.NewGuid().ToString())
-                        }),
-                        Expires = DateTime.UtcNow.AddMinutes(5),
-                        Issuer = issuer,
-                        Audience = audience,
-                        SigningCredentials = new SigningCredentials
-                        (new SymmetricSecurityKey(key),
-                            SecurityAlgorithms.HmacSha512Signature)
-                    };
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-                    var stringToken = tokenHandler.WriteToken(token);
+    
 
-                    return Ok(stringToken);
-                }
-            }
-        }
-        
-        String message = "401 NOT AUTHORIZED";
-        return Unauthorized(message);
+    [HttpPost("Auth")]
+    public IActionResult Authenticate(AuthenticateRequest loginReq)
+    {
+        var response = _webAuthRequestService.Authenticate(loginReq);
+
+        if (response == null)
+            return BadRequest(new { message = "Challenge not valid" });
+        return Ok(response);
     }
+
+    
+
+   
 }

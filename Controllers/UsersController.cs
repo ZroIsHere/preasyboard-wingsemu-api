@@ -26,7 +26,6 @@ public class LoginRequestsController : ControllerBase
 
     public LoginRequestsController(IWebAuthRequestService loginRequestService)
     {
-        Console.WriteLine("Started");
         _loginRequestService = loginRequestService;
     }
 

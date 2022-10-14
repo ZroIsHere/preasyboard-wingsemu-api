@@ -85,6 +85,6 @@ app.UseMiddleware<JwtMiddleware>();
 app.MapControllers();
 app.UseRouting();
 app.UseAuthorization();
-Observable.Interval(TimeSpan.FromMinutes(5)).Subscribe(s => StaticDataManagement.RemoveTokensLoop());
-Observable.Interval(TimeSpan.FromSeconds(2)).Subscribe(s => StaticDataManagement.RemoveAttemptsLoop());
+//Observable.Interval(TimeSpan.FromMinutes(5)).Subscribe(s => StaticDataManagement.RemoveTokensLoop());
+//Observable.Interval(TimeSpan.FromSeconds(2)).Subscribe(s => StaticDataManagement.RemoveAttemptsLoop());
 app.Run();

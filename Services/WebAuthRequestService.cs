@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using noswebapp_api.Extensions;
 
 namespace noswebapp_api.Services;
 
@@ -21,59 +22,88 @@ public class WebAuthRequestService : IWebAuthRequestService
 {
     private readonly AppSettings _appSettings;
     private readonly Random _random;
+    public static Dictionary<int, WebAuthRequest> _challengeAttempts = new();
+
     public WebAuthRequestService(IOptions<AppSettings> appSettings)
     {
         _appSettings = appSettings.Value;
         _random = new Random();
+
     }
 
-    public AuthenticateResponse Authenticate(AuthenticateRequest loginReq)
+    public AuthenticateResponse Authenticate(AuthenticateRequest authReq)
     {
 
-        WebAuthRequest currentWebAuthRequest = GetChallengeById(loginReq.Id);
-        
-        // return null if user not found
+        WebAuthRequest currentWebAuthRequest = GetChallengeById(authReq.Id);
+        if (_challengeAttempts.ContainsKey(authReq.Id))
+        {
+            WebAuthRequest oldreq = null;
+            _challengeAttempts.TryGetValue(authReq.Id, out oldreq);
+            
+
+            if (oldreq != null)
+            {
+                if (authReq.Id.Equals(oldreq.Id) && DecryptionUtils.DecryptWithPublicKey(authReq.Challenge).Equals(oldreq.Challenge))
+                {
+                    var token = GenerateJwtToken(currentWebAuthRequest);
+                    return new AuthenticateResponse(currentWebAuthRequest, token);
+                }
+            }
+        }
         if (currentWebAuthRequest == null) return null;
 
-        //FOR ZRO : HERE, SHOULD BE THE LOGIC FOR CHECK ENCRYPT DECRYPT,
-        //BEFORE GENERATING TOKEN
-        
-        // authentication successful so generate jwt token
-        var token = GenerateJwtToken(currentWebAuthRequest);
-        
-        return new AuthenticateResponse(currentWebAuthRequest, token);
+
+        return null;
     }
 
     public IEnumerable<WebAuthRequest> GetAll()
     {
 
-        return (IEnumerable<WebAuthRequest>)StaticDataManagement.ChallengeAttempts;
+        return (IEnumerable<WebAuthRequest>)_challengeAttempts;
     }
 
 
 
     public WebAuthRequest GetById(int id)
     {
-        return StaticDataManagement.ChallengeAttempts[0];
+        return _challengeAttempts[id];
     }
 
     // helper methods
 
-    private string GenerateJwtToken(WebAuthRequest user)
+    private string GenerateJwtToken(WebAuthRequest req)
     {
-        // generate token that is valid for 7 days
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
-        DateTime ExpireTime = DateTime.UtcNow.AddDays(7);
-        var tokenDescriptor = new SecurityTokenDescriptor
+        if (_challengeAttempts.ContainsKey(req.Id))
         {
-            Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-            Expires = ExpireTime,
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-        string token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-        StaticDataManagement.ValidatedTokens.Add(token, ExpireTime);
-        return token;
+            WebAuthRequest oldreq = null;
+
+            _challengeAttempts.TryGetValue(req.Id, out oldreq);
+            if (oldreq != null)
+            {
+
+                _challengeAttempts = new();
+                string issuer = NosWebAppEnvVariables.JwtIssuer;
+                string audience = NosWebAppEnvVariables.JwtAudience;
+                byte[] encKey = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new[] {new Claim("id", oldreq.Id.ToString())}),
+                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    SigningCredentials = new SigningCredentials
+                    (new SymmetricSecurityKey(encKey),
+                        SecurityAlgorithms.HmacSha512Signature)
+                };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+                var stringToken = tokenHandler.WriteToken(token);
+
+                return stringToken;
+                
+            }
+        }
+
+        return null;
+
     }
 
     public string RandomString(int size, bool lowerCase)
@@ -94,31 +124,24 @@ public class WebAuthRequestService : IWebAuthRequestService
         return retval;
     }
 
-   
-    public List<WebAuthRequest> GetChallenges()
-    {
-        Console.WriteLine("UserService::GetChallenges " + StaticDataManagement.ChallengeAttempts.Count);
-        return StaticDataManagement.ChallengeAttempts.Values.ToList();
-    }
-
-    public WebAuthRequest GetChallengeById(int id)
-    {
-        Console.WriteLine("AAA");
-        Console.WriteLine(id);
-        Console.WriteLine("BBB");
-
-        if (StaticDataManagement.ChallengeAttempts.ContainsKey(id))
-        {
-            return StaticDataManagement.ChallengeAttempts[id];
-        }
-        return null;
-    }
-
     public WebAuthRequest AddChallenge()
     {
-        var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(2048, false), TimeStamp = DateTime.UtcNow.ToFileTime() };
-        StaticDataManagement.ChallengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
+        var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(16, false), TimeStamp = DateTime.UtcNow.ToFileTime() };
+        _challengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
         return challengeAttempt;
     }
+
+    public List<WebAuthRequest> GetChallenges()
+    {
+        return _challengeAttempts.Values.ToList();
+    }
+
+    public  WebAuthRequest GetChallengeById(int id)
+    {
+         
+        return _challengeAttempts[id];
+    }
+
+    
 
 }

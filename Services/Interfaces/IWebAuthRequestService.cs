@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using noswebapp_api.InternalEntities;
 using noswebapp_api.RequestEntities;

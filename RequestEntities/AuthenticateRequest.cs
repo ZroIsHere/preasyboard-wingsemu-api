@@ -10,6 +10,4 @@ public class AuthenticateRequest
     [Required]
     public string Challenge { get; set; }
 
-    [Required]
-    public long TimeStamp { get; set; }
 }

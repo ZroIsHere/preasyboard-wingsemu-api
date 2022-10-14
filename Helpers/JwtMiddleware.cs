@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 using System.Linq;
 using System;
+using noswebapp.RequestEntities;
 
 public class JwtMiddleware
 {
@@ -23,22 +24,26 @@ public class JwtMiddleware
         _next = next;
     }
 
-    public async Task Invoke(HttpContext context, IWebAuthRequestService userService)
+    public async Task Invoke(HttpContext context, IWebAuthRequestService authRequestService)
     {
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
         if (token != null)
-            AttachUserToContext(context, userService, token);
+            
+            AttachUserToContext(context, authRequestService, token);
 
         await _next(context);
     }
 
-    private void AttachUserToContext(HttpContext context, IWebAuthRequestService userService, string token)
+    private void AttachUserToContext(HttpContext context, IWebAuthRequestService authRequestService, string token)
     {
         try
         {
+            string issuer = NosWebAppEnvVariables.JwtIssuer;
+            string audience = NosWebAppEnvVariables.JwtAudience;          
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
+
             tokenHandler.ValidateToken(token, new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -53,7 +58,9 @@ public class JwtMiddleware
             var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
             // attach user to context on successful jwt validation
-            context.Items["User"] = userService.GetById(userId);
+       
+            context.Items["WebAuthRequest"] = authRequestService;
+
         }
         catch
         {
