@@ -21,11 +21,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\PhoenixLib.Caching\PhoenixLib.Caching.csproj" />
         <ProjectReference Include="..\WingsAPI.Communication\WingsAPI.Communication.csproj" />
         <ProjectReference Include="..\WingsEmu.Communication.gRPC\WingsEmu.Communication.gRPC.csproj" />
         <ProjectReference Include="..\_plugins\Plugin.DB.EF\Plugin.DB.EF.csproj" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.0" />
+        <ProjectReference Include="..\_plugins\Plugin.ResourceLoader\Plugin.ResourceLoader.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,34 +1,20 @@
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
 using dotenv.net;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using noswebapp_api;
-using noswebapp.Controllers;
 using Plugin.Database;
 using WingsAPI.Plugins;
 using WingsEmu.Communication.gRPC.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Web.Mvc;
-using System.Collections.Generic;
-
-using System.Security.Claims;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Reactive.Linq;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using noswebapp_api.Configuration;
-using noswebapp_api.Controllers;
 using noswebapp_api.Managers;
 using noswebapp_api.InputFormatters;
-
 using noswebapp_api.Services;
 using noswebapp_api.Services.Interfaces;
+using PhoenixLib.Caching;
+using Plugin.ResourceLoader;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -52,8 +38,11 @@ builder.Services.AddGrpcBazaarServiceClient();
 builder.Services.AddGrpcFamilyServiceClient();
 builder.Services.AddGrpcMailServiceClient();
 builder.Services.AddGrpcDbServerServiceClient();
+builder.Services.TryAddSingleton(typeof(ILongKeyCachedRepository<>), typeof(InMemoryCacheRepository<>));
 builder.Services.AddTransient<IDependencyInjectorPlugin, DatabasePlugin>();
+new FileResourceLoaderPlugin().AddDependencies(builder.Services);
 new DatabasePlugin().AddDependencies(builder.Services);
+
 builder.Services.AddMvc(options =>
 {
     options.InputFormatters.Insert(0, new RawBodyInputFormatter());
