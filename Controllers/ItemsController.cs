@@ -18,14 +18,15 @@ namespace noswebapp_api.Controllers;
 public class ItemsController : Controller
 {
     private readonly List<ItemDTO> _cachedItems;
+    //private readonly List<GameDataTranslationDto> _cachedTexts;
     private readonly IResourceLoader<ItemDTO> _itemDao;
 
     public ItemsController(IResourceLoader<ItemDTO> itemDao, IResourceLoader<GameDataTranslationDto> textsDao)
     {
-        _cachedTexts = textsDao.LoadAsync().Result.Where(s => s.Language.Equals(RegionLanguageType.EN) && s.DataType.Equals(GameDataType.Item)).ToList();
+        //_cachedTexts = textsDao.LoadAsync().Result.Where(s => s.Language.Equals(RegionLanguageType.EN) && s.DataType.Equals(GameDataType.Item)).ToList();
         foreach (ItemDTO itemDto in itemDao.LoadAsync().Result)
         {
-            itemDto.Name = _cachedTexts.FirstOrDefault(s => s.Key.Equals(itemDto.Name)).Value;
+            //itemDto.Name = _cachedTexts.FirstOrDefault(s => s.Key.Equals(itemDto.Name)).Value;
             _cachedItems.Add(itemDto);
         }
     }
