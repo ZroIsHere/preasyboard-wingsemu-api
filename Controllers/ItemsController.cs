@@ -5,6 +5,8 @@ using noswebapp_api.Attributes;
 using noswebapp_api.RequestEntities;
 using PhoenixLib.Caching;
 using PhoenixLib.MultiLanguage;
+using Plugin.ResourceLoader;
+using Plugin.ResourceLoader.Loaders;
 using WingsAPI.Data.GameData;
 using WingsEmu.DTOs.Items;
 using WingsEmu.Game._i18n;
@@ -22,7 +24,7 @@ public class ItemsController : Controller
     public ItemsController(IResourceLoader<ItemDTO> itemDao, IResourceLoader<GameDataTranslationDto> textsDao)
     {
         _cachedTexts = textsDao.LoadAsync().Result.Where(s => s.Language.Equals(RegionLanguageType.EN) && s.DataType.Equals(GameDataType.Item)).ToList();
-        foreach (ItemDTO itemDto in itemDao.LoadAsync().Result)
+        foreach (ItemDTO itemDto in new ItemResourceFileLoader(new ResourceLoadingConfiguration("resources/")).LoadAsync().Result)
         {
             itemDto.Name = _cachedTexts.FirstOrDefault(s => s.Key.Equals(itemDto.Name)).Value;
             _cachedItems.Add(itemDto);
