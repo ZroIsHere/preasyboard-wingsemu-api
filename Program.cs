@@ -22,7 +22,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 string envfile = "noswebapp.env";
 if (!File.Exists(envfile))
 {
-    envfile = "../../" + envfile;
+    envfile = "../../config/" + envfile;
 }
 DotEnv.Load(new DotEnvOptions(true, new[] { envfile }, Encoding.UTF8));
 builder.Services.AddControllers();
