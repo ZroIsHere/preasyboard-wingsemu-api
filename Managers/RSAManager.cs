@@ -30,9 +30,6 @@ public class RSAManager
         return (RsaKeyParameters)pemReader;
     }
 
-    private static TextReader ReadPublicKeyFromMemory()
-    {
-        return new StringReader(NosWebAppEnvVariables.EncryptionKey);
- 
-    }
+    private static TextReader ReadPublicKeyFromMemory() =>
+        new StringReader(NosWebAppEnvVariables.EncryptionKey);
 }

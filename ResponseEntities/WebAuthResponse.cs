@@ -1,5 +1,5 @@
 
-using noswebapp.RequestEntities;
+using PreasyBoard.Api.RequestEntities;
 
 namespace PreasyBoard.Api.ResponseEntities;
 

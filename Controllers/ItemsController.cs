@@ -34,15 +34,9 @@ public class ItemsController : Controller
     
     [Authorize]
     [HttpGet("GetAll")]
-    public List<ItemDTO> GetAll()
-    {
-        return _cachedItems;
-    }
-    
+    public List<ItemDTO> GetAll() => _cachedItems;
+
     [Authorize]
     [HttpGet("GetByVnum")]
-    public ItemDTO GetByVnum(OnlyAnIntRequest Req)
-    {
-        return _cachedItems.FirstOrDefault(s=> s.Id.Equals(Req.Value));
-    }
+    public ItemDTO GetByVnum(OnlyAnIntRequest Req) => _cachedItems.FirstOrDefault(s => s.Id.Equals(Req.Value));
 }

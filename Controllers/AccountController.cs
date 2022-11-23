@@ -17,7 +17,7 @@ using WingsAPI.Communication.DbServer.AccountService;
 using WingsAPI.Data.Account;
 using WingsEmu.DTOs.Account;
 
-namespace noswebapp.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

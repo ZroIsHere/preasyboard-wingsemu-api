@@ -9,7 +9,7 @@ using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
 using RemoveMailRequest = WingsAPI.Communication.Mail.RemoveMailRequest;
 
-namespace noswebapp.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -27,18 +27,14 @@ public class MailController : Controller
 
     [Authorize]
     [HttpPost("CreateMail")]
-    public CreateMailResponse CreateMailAsync(CreateMailRequest req)
-    {
-        return _container.GetService<IMailService>().CreateMailAsync(req).Result;
-    }
-    
+    public CreateMailResponse CreateMailAsync(CreateMailRequest req) =>
+        _container.GetService<IMailService>().CreateMailAsync(req).Result;
+
     [Authorize]
     [HttpPost("CreateMailBatch")]
-    public CreateMailBatchResponse CreateMailBatchAsync(CreateMailBatchRequest req)
-    {
-        return _container.GetService<IMailService>().CreateMailBatchAsync(req).Result;
-    }
-    
+    public CreateMailBatchResponse CreateMailBatchAsync(CreateMailBatchRequest req) =>
+        _container.GetService<IMailService>().CreateMailBatchAsync(req).Result;
+
     [Authorize]
     [HttpPost("RemoveMail")]
     public BasicRpcResponse RemoveMailAsync(RemoveMailRequest Req)

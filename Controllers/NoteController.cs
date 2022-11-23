@@ -8,7 +8,7 @@ using PreasyBoard.Api.RequestEntities;
 using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
 
-namespace noswebapp.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -26,10 +26,8 @@ public class NoteController: Controller
 
     [Authorize]
     [HttpPost("CreateNote")]
-    public CreateNoteResponse CreateNoteAsync(CreateNoteRequest req)
-    {
-        return _container.GetService<INoteService>().CreateNoteAsync(req).Result;
-    }
+    public CreateNoteResponse CreateNoteAsync(CreateNoteRequest req) =>
+        _container.GetService<INoteService>().CreateNoteAsync(req).Result;
 
     [Authorize]
     [HttpPost("RemoveNote")]

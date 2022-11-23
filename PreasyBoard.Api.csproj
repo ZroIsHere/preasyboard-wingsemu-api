@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <OutputPath>..\..\dist\noswebapp-api\</OutputPath>
+        <OutputPath>..\..\dist\PreasyBoard.Api.api\</OutputPath>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <RootNamespace>noswebapp_api</RootNamespace>
+        <RootNamespace>PreasyBoard.Api.api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

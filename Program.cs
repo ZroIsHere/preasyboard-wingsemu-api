@@ -19,7 +19,7 @@ using Plugin.ResourceLoader;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 //Load environment variables
-string envfile = "noswebapp.env";
+string envfile = "PreasyBoard.Api.env";
 if (!File.Exists(envfile))
 {
     envfile = "../../config/" + envfile;

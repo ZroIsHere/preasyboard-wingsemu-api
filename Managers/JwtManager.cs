@@ -24,8 +24,9 @@ public class JwtManager
         var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
         if (token != null)
-            
+        {
             AttachUserToContext(context, authRequestService, token);
+        }
 
         await _next(context);
     }

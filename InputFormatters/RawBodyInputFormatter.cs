@@ -23,8 +23,5 @@ public class RawBodyInputFormatter : InputFormatter
         }
     }
 
-    protected override bool CanReadType(Type type)
-    {
-        return type == typeof(string);
-    }
+    protected override bool CanReadType(Type type) => type == typeof(string);
 }

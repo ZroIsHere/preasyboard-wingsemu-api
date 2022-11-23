@@ -10,7 +10,7 @@ using WingsAPI.Communication;
 using WingsAPI.Communication.DbServer.CharacterService;
 using WingsAPI.Data.Character;
 
-namespace noswebapp.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -29,24 +29,18 @@ public class CharacterController : Controller
     
     [Authorize]
     [HttpPost("SaveCharacters")]
-    public DbServerSaveCharactersResponse SaveCharacters(DbServerSaveCharactersRequest Req)
-    {
-        return _container.GetService<ICharacterService>().SaveCharacters(Req).Result;
-    }
+    public DbServerSaveCharactersResponse SaveCharacters(DbServerSaveCharactersRequest Req) =>
+        _container.GetService<ICharacterService>().SaveCharacters(Req).Result;
 
     [Authorize]
     [HttpPost("SaveCharacter")]
-    public DbServerSaveCharacterResponse SaveCharacter(DbServerSaveCharacterRequest Req)
-    {
-        return _container.GetService<ICharacterService>().SaveCharacter(Req).Result;
-    }
+    public DbServerSaveCharacterResponse SaveCharacter(DbServerSaveCharacterRequest Req) =>
+        _container.GetService<ICharacterService>().SaveCharacter(Req).Result;
 
     [Authorize]
     [HttpPost("CreateCharacter")]
-    public DbServerSaveCharacterResponse CreateCharacter(DbServerSaveCharacterRequest Req)
-    {
-        return _container.GetService<ICharacterService>().CreateCharacter(Req).Result;
-    }
+    public DbServerSaveCharacterResponse CreateCharacter(DbServerSaveCharacterRequest Req) =>
+        _container.GetService<ICharacterService>().CreateCharacter(Req).Result;
 
     [Authorize]
     [HttpGet("GetCharacters")]
@@ -60,17 +54,13 @@ public class CharacterController : Controller
 
     [Authorize]
     [HttpGet("GetCharacterBySlot")]
-    public DbServerGetCharacterResponse GetCharacterBySlot(DbServerGetCharacterFromSlotRequest Req)
-    {
-        return _container.GetService<ICharacterService>().GetCharacterBySlot(Req).Result;
-    }
+    public DbServerGetCharacterResponse GetCharacterBySlot(DbServerGetCharacterFromSlotRequest Req) =>
+         _container.GetService<ICharacterService>().GetCharacterBySlot(Req).Result;
 
     [Authorize]
     [HttpGet("GetCharacterById")]
-    public DbServerGetCharacterResponse GetCharacterById(DbServerGetCharacterByIdRequest Req)
-    {
-        return _container.GetService<ICharacterService>().GetCharacterById(Req).Result;
-    }
+    public DbServerGetCharacterResponse GetCharacterById(DbServerGetCharacterByIdRequest Req) =>
+        _container.GetService<ICharacterService>().GetCharacterById(Req).Result;
 
     [Authorize]
     [HttpGet("GetCharacterByName")]
@@ -84,10 +74,8 @@ public class CharacterController : Controller
 
     [Authorize]
     [HttpPost("FlushCharacterSaves")]
-    public DbServerFlushCharacterSavesResponse FlushCharacterSaves()
-    {
-        return _container.GetService<ICharacterService>().FlushCharacterSaves(new()).Result;
-    }
+    public DbServerFlushCharacterSavesResponse FlushCharacterSaves() =>
+        _container.GetService<ICharacterService>().FlushCharacterSaves(new()).Result;
 
     [Authorize]
     [HttpPost("DeleteCharacter")]
@@ -111,29 +99,21 @@ public class CharacterController : Controller
 
     [Authorize]
     [HttpGet("GetTopPoints")]
-    public CharacterGetTopResponse GetTopPoints()
-    {
-        return _container.GetService<ICharacterService>().GetTopPoints(new()).Result;
-    }
+    public CharacterGetTopResponse GetTopPoints() =>
+        _container.GetService<ICharacterService>().GetTopPoints(new()).Result;
 
     [Authorize]
     [HttpGet("GetTopReputation")]
-    public CharacterGetTopResponse GetTopReputation()
-    {
-        return _container.GetService<ICharacterService>().GetTopReputation(new()).Result;
-    }
+    public CharacterGetTopResponse GetTopReputation() =>
+        _container.GetService<ICharacterService>().GetTopReputation(new()).Result;
 
     [Authorize]
     [HttpGet("GetTopCompliment")]
-    public CharacterGetTopResponse GetTopCompliment()
-    {
-        return _container.GetService<ICharacterService>().GetTopCompliment(new()).Result;
-    }
+    public CharacterGetTopResponse GetTopCompliment() =>
+        _container.GetService<ICharacterService>().GetTopCompliment(new()).Result;
     
     [Authorize]
     [HttpGet("RefreshRanking")]
-    public CharacterRefreshRankingResponse RefreshRanking()
-    {
-        return _container.GetService<ICharacterService>().RefreshRanking(new()).Result;
-    }
+    public CharacterRefreshRankingResponse RefreshRanking() =>
+        _container.GetService<ICharacterService>().RefreshRanking(new()).Result;
 }

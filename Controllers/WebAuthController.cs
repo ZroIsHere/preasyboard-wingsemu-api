@@ -18,7 +18,7 @@ using PreasyBoard.Api.Attributes;
 using PreasyBoard.Api.Extensions;
 using PreasyBoard.Api.Managers;
 using PreasyBoard.Api.Services.Interfaces;
-using noswebapp.RequestEntities;
+using PreasyBoard.Api.RequestEntities;
 using WingsAPI.Communication;
 using PreasyBoard.Api.RequestEntities;
 using System.Collections.Generic;
@@ -42,31 +42,17 @@ public class WebAuthController : ControllerBase
     }
     
     [HttpGet("LoginRequest")]
-    public WebAuthRequest LoginRequest()
-    {
-        return _webAuthRequestService.AddChallenge();
-    }
+    public WebAuthRequest LoginRequest() => _webAuthRequestService.AddChallenge();
 
     [HttpGet("AllReqs")]
-    public List<WebAuthRequest> AllReqs()
-    {
-
-        return _webAuthRequestService.GetChallenges();
-    }
+    public List<WebAuthRequest> AllReqs() => _webAuthRequestService.GetChallenges();
 
     [HttpGet("Byid")]
-    public WebAuthRequest AllReqs([FromQuery] int id)
-    {
+    public WebAuthRequest AllReqs([FromQuery] int id) => _webAuthRequestService.GetChallengeById(id);
 
-        return _webAuthRequestService.GetChallengeById(id);
-    }
-    
     [Authorize]
     [HttpGet("GetMessage")]
-    public JsonResult GetMessage()
-    {
-        return  new JsonResult(new { message = "Authorized and ready to communicate" }) { StatusCode = StatusCodes.Status200OK }; ;
-    }
+    public JsonResult GetMessage() => new JsonResult(new { message = "Authorized and ready to communicate" }) { StatusCode = StatusCodes.Status200OK };
 
     [HttpPost("Auth")]
     public IActionResult Authenticate(AuthenticateRequest loginReq)

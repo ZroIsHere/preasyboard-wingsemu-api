@@ -9,7 +9,7 @@ using WingsAPI.Communication.DbServer.AccountService;
 using WingsAPI.Communication.DbServer.WarehouseService;
 using WingsAPI.Data.Account;
 
-namespace noswebapp.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -38,11 +38,9 @@ public class AccountWarehouseController : Controller
     
     [Authorize]
     [HttpGet("GetItem")]
-    public AccountWarehouseGetItemResponse GetItem(AccountWarehouseGetItemRequest Req)
-    {
-        return _container.GetService<IAccountWarehouseService>().GetItem(Req).Result;
-    }
-    
+    public AccountWarehouseGetItemResponse GetItem(AccountWarehouseGetItemRequest Req) => 
+        _container.GetService<IAccountWarehouseService>().GetItem(Req).Result;
+
     [Authorize]
     [HttpPost("AddItem")]
     public AccountWarehouseAddItemResponse AddItem(AccountWarehouseItemDto Dto)
@@ -55,15 +53,11 @@ public class AccountWarehouseController : Controller
     
     [Authorize]
     [HttpPost("WithdrawItem")]
-    public AccountWarehouseWithdrawItemResponse WithdrawItem(AccountWarehouseWithdrawItemRequest Req)
-    {
-        return _container.GetService<IAccountWarehouseService>().WithdrawItem(Req).Result;
-    }
-    
+    public AccountWarehouseWithdrawItemResponse WithdrawItem(AccountWarehouseWithdrawItemRequest Req) =>
+        _container.GetService<IAccountWarehouseService>().WithdrawItem(Req).Result;
+
     [Authorize]
     [HttpPost("MoveItem")]
-    public AccountWarehouseMoveItemResponse MoveItem(AccountWarehouseMoveItemRequest Req)
-    {
-        return _container.GetService<IAccountWarehouseService>().MoveItem(Req).Result;
-    }
+    public AccountWarehouseMoveItemResponse MoveItem(AccountWarehouseMoveItemRequest Req) =>
+        _container.GetService<IAccountWarehouseService>().MoveItem(Req).Result;
 }

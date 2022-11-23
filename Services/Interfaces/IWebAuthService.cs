@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using PreasyBoard.Api.RequestEntities;
 using PreasyBoard.Api.ResponseEntities;
-using noswebapp.RequestEntities;
+using PreasyBoard.Api.RequestEntities;
 
 namespace PreasyBoard.Api.Services.Interfaces;
 
@@ -15,9 +15,4 @@ public interface IWebAuthService
     WebAuthRequest AddChallenge();
 
     WebAuthResponse Authenticate(AuthenticateRequest model);
-    IEnumerable<WebAuthRequest> GetAll();
-
-    WebAuthRequest GetById(int id);
-
-    String RandomString(int size, bool lowerCase);
 }

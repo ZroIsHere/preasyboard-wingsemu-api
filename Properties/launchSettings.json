@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "noswebapp-api": {
+    "PreasyBoard.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

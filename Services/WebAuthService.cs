@@ -2,7 +2,7 @@
 using PreasyBoard.Api.RequestEntities;
 using PreasyBoard.Api.ResponseEntities;
 using PreasyBoard.Api.Services.Interfaces;
-using noswebapp.RequestEntities;
+using PreasyBoard.Api.RequestEntities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PreasyBoard.Api.Managers;
@@ -21,13 +21,7 @@ namespace PreasyBoard.Api.Services;
 public class WebAuthService : IWebAuthService
 // TODO: Remove all the logging.
 {
-    private readonly Random _random;
     public static Dictionary<int, WebAuthRequest> _challengeAttempts = new();
-
-    public WebAuthService()
-    {
-        _random = new Random();
-    }
 
     public WebAuthResponse Authenticate(AuthenticateRequest authReq)
     {
@@ -48,23 +42,7 @@ public class WebAuthService : IWebAuthService
                 }
             }
         }
-        if (currentWebAuthRequest == null) return null;
-
-
         return null;
-    }
-
-    public IEnumerable<WebAuthRequest> GetAll()
-    {
-
-        return (IEnumerable<WebAuthRequest>)_challengeAttempts;
-    }
-
-
-
-    public WebAuthRequest GetById(int id)
-    {
-        return _challengeAttempts[id];
     }
 
     private string GenerateJwtToken(WebAuthRequest req)
@@ -102,15 +80,13 @@ public class WebAuthService : IWebAuthService
 
     }
 
-    public string RandomString(int size, bool lowerCase)
+    private string RandomString(int size, bool lowerCase = false)
     {
         var builder = new StringBuilder();
         var random = new Random();
-        char ch;
         for (int i = 1; i < size + 1; i++)
         {
-            ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
-            builder.Append(ch);
+            builder.Append(Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65))));
         }
         string retval = builder.ToString();
         if (lowerCase)
@@ -122,22 +98,15 @@ public class WebAuthService : IWebAuthService
 
     public WebAuthRequest AddChallenge()
     {
-        var challengeAttempt = new WebAuthRequest() { Id = _random.Next(1, 255), Challenge = RandomString(16, false), TimeStamp = DateTime.UtcNow.ToFileTime() };
+        var challengeAttempt = new WebAuthRequest(RandomString(16));
         _challengeAttempts.Add(challengeAttempt.Id, challengeAttempt);
         return challengeAttempt;
     }
 
-    public List<WebAuthRequest> GetChallenges()
-    {
-        return _challengeAttempts.Values.ToList();
-    }
+    public List<WebAuthRequest> GetChallenges() => _challengeAttempts.Values.ToList();
 
-    public  WebAuthRequest GetChallengeById(int id)
-    {
-         
-        return _challengeAttempts[id];
-    }
+    public WebAuthRequest GetChallengeById(int id) => _challengeAttempts[id];
 
-    
+
 
 }

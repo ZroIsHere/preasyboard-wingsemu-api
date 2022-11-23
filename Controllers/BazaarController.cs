@@ -10,7 +10,7 @@ using PreasyBoard.Api.RequestEntities;
 using WingsAPI.Communication.Bazaar;
 using WingsEmu.Game.Algorithm;
 
-namespace noswebapp.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -108,11 +108,9 @@ public class BazaarController : Controller
     
     [Authorize]
     [HttpPost("BuyItemFromBazaar")]
-    public BazaarItemResponse BuyItemFromBazaar(BazaarBuyItemRequest Req)
-    {
-        return _container.GetService<IBazaarService>().BuyItemFromBazaar(Req).Result;
-    }
-    
+    public BazaarItemResponse BuyItemFromBazaar(BazaarBuyItemRequest Req) =>
+        _container.GetService<IBazaarService>().BuyItemFromBazaar(Req).Result;
+
     [Authorize]
     [HttpPost("UnlistItemsFromBazaarWithVnum")]
     public UnlistItemFromBazaarResponse UnlistItemsFromBazaarWithVnumAsync(List<OnlyAnIntRequest> Req)
