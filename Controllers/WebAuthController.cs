@@ -13,17 +13,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using noswebapp_api;
-using noswebapp_api.Attributes;
-using noswebapp_api.Extensions;
-using noswebapp_api.Managers;
-using noswebapp_api.Services.Interfaces;
+using PreasyBoard.Api;
+using PreasyBoard.Api.Attributes;
+using PreasyBoard.Api.Extensions;
+using PreasyBoard.Api.Managers;
+using PreasyBoard.Api.Services.Interfaces;
 using noswebapp.RequestEntities;
 using WingsAPI.Communication;
-using noswebapp_api.RequestEntities;
+using PreasyBoard.Api.RequestEntities;
 using System.Collections.Generic;
 
-namespace noswebapp_api.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

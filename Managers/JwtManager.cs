@@ -1,4 +1,4 @@
-using noswebapp_api.Services.Interfaces;
+using PreasyBoard.Api.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
-using noswebapp_api.Configuration;
+using PreasyBoard.Api.Configuration;
 
-namespace noswebapp_api.Managers;
+namespace PreasyBoard.Api.Managers;
 
 public class JwtManager
 {

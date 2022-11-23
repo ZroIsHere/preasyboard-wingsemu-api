@@ -1,7 +1,7 @@
 
 using noswebapp.RequestEntities;
 
-namespace noswebapp_api.ResponseEntities;
+namespace PreasyBoard.Api.ResponseEntities;
 
 public class WebAuthResponse
 {

@@ -1,6 +1,6 @@
 using noswebapp.RequestEntities;
 
-namespace noswebapp_api.Attributes;
+namespace PreasyBoard.Api.Attributes;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

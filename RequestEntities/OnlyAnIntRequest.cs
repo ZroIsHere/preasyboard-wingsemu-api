@@ -1,4 +1,4 @@
-﻿namespace noswebapp_api.RequestEntities;
+﻿namespace PreasyBoard.Api.RequestEntities;
 
 public class OnlyAnIntRequest
 {

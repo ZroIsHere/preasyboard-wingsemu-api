@@ -1,6 +1,6 @@
-using noswebapp_api.Managers;
+using PreasyBoard.Api.Managers;
 
-namespace noswebapp_api.Extensions
+namespace PreasyBoard.Api.Extensions
 {
     public static class StringExtension
     {

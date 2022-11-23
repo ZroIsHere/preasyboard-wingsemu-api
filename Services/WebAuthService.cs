@@ -1,11 +1,11 @@
 
-using noswebapp_api.RequestEntities;
-using noswebapp_api.ResponseEntities;
-using noswebapp_api.Services.Interfaces;
+using PreasyBoard.Api.RequestEntities;
+using PreasyBoard.Api.ResponseEntities;
+using PreasyBoard.Api.Services.Interfaces;
 using noswebapp.RequestEntities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using noswebapp_api.Managers;
+using PreasyBoard.Api.Managers;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -13,10 +13,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using noswebapp_api.Configuration;
-using noswebapp_api.Extensions;
+using PreasyBoard.Api.Configuration;
+using PreasyBoard.Api.Extensions;
 
-namespace noswebapp_api.Services;
+namespace PreasyBoard.Api.Services;
 
 public class WebAuthService : IWebAuthService
 // TODO: Remove all the logging.

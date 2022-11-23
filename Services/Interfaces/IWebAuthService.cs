@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-using noswebapp_api.RequestEntities;
-using noswebapp_api.ResponseEntities;
+using PreasyBoard.Api.RequestEntities;
+using PreasyBoard.Api.ResponseEntities;
 using noswebapp.RequestEntities;
 
-namespace noswebapp_api.Services.Interfaces;
+namespace PreasyBoard.Api.Services.Interfaces;
 
 public interface IWebAuthService
 {

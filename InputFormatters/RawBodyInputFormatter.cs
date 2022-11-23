@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
 
-namespace noswebapp_api.InputFormatters;
+namespace PreasyBoard.Api.InputFormatters;
 
 public class RawBodyInputFormatter : InputFormatter
 {

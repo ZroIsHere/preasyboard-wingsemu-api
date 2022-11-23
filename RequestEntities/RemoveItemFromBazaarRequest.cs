@@ -1,6 +1,6 @@
 ﻿using WingsAPI.Data.Bazaar;
 
-namespace noswebapp_api.RequestEntities;
+namespace PreasyBoard.Api.RequestEntities;
 
 public class RemoveItemFromBazaarRequest
 {

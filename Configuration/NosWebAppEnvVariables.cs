@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace noswebapp_api.Configuration;
+namespace PreasyBoard.Api.Configuration;
 
 public class NosWebAppEnvVariables
 {

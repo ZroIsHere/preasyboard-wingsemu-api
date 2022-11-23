@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using noswebapp_api.Attributes;
-using noswebapp_api.RequestEntities;
+using PreasyBoard.Api.Attributes;
+using PreasyBoard.Api.RequestEntities;
 using PhoenixLib.Caching;
 using PhoenixLib.MultiLanguage;
 using Plugin.ResourceLoader;
@@ -11,7 +11,7 @@ using WingsAPI.Data.GameData;
 using WingsEmu.DTOs.Items;
 using WingsEmu.Game._i18n;
 
-namespace noswebapp_api.Controllers;
+namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

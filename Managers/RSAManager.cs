@@ -5,9 +5,9 @@ using Org.BouncyCastle.Crypto.Encodings;
 using Org.BouncyCastle.Crypto.Engines;
 using System;
 using System.IO;
-using noswebapp_api.Configuration;
+using PreasyBoard.Api.Configuration;
 
-namespace noswebapp_api.Managers;
+namespace PreasyBoard.Api.Managers;
 
 public class RSAManager
 {

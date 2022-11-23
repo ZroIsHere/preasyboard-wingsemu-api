@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using noswebapp_api;
-using noswebapp_api.Attributes;
-using noswebapp_api.RequestEntities;
+using PreasyBoard.Api;
+using PreasyBoard.Api.Attributes;
+using PreasyBoard.Api.RequestEntities;
 using WingsAPI.Communication;
 using WingsAPI.Communication.Mail;
 

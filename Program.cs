@@ -8,11 +8,11 @@ using Plugin.Database;
 using WingsAPI.Plugins;
 using WingsEmu.Communication.gRPC.Extensions;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using noswebapp_api.Configuration;
-using noswebapp_api.Managers;
-using noswebapp_api.InputFormatters;
-using noswebapp_api.Services;
-using noswebapp_api.Services.Interfaces;
+using PreasyBoard.Api.Configuration;
+using PreasyBoard.Api.Managers;
+using PreasyBoard.Api.InputFormatters;
+using PreasyBoard.Api.Services;
+using PreasyBoard.Api.Services.Interfaces;
 using PhoenixLib.Caching;
 using Plugin.ResourceLoader;
 
