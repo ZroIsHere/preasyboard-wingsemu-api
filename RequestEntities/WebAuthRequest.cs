@@ -8,7 +8,7 @@ public class WebAuthRequest
     {
         Id = new Random().Next(1, 255);
         Challenge = _challenge;
-        TimeStamp = DateTime.ToFileTimeUtc();
+        TimeStamp = DateTime.UtcNow.ToFileTime();
     }
 
     public int Id { get; set; }
