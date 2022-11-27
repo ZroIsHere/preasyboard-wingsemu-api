@@ -27,7 +27,7 @@ namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WebAuthController : ControllerBase
+public class WebAuthController : Controller
 {
     private readonly IServiceProvider _container;
     private IWebAuthService _webAuthRequestService;

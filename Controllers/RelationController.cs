@@ -12,7 +12,7 @@ namespace PreasyBoard.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RelationController
+public class RelationController : Controller
 {
     private readonly IServiceProvider _container;
 
