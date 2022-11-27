@@ -64,7 +64,7 @@ public class FamilyController : Controller
         _container.GetService<IFamilyService>().RemoveMemberByCharIdAsync(Req).Result;
 
     [Authorize]
-    [HttpPost("GetFamilyById")]
+    [HttpGet("GetFamilyById")]
     public FamilyIdResponse GetFamilyById(OnlyAnLongRequest Req) =>
         _container.GetService<IFamilyService>().GetFamilyByIdAsync(new()
         {
@@ -72,7 +72,7 @@ public class FamilyController : Controller
         }).Result;
 
     [Authorize]
-    [HttpPost("GetFamilyMembersByFamilyId")]
+    [HttpGet("GetFamilyMembersByFamilyId")]
     public FamilyListMembersResponse GetFamilyMembersByFamilyId(OnlyAnLongRequest Req)
     {
         return _container.GetService<IFamilyService>().GetFamilyMembersByFamilyId(new()
@@ -82,7 +82,7 @@ public class FamilyController : Controller
     }
 
     [Authorize]
-    [HttpPost("GetMembershipByCharacterId")]
+    [HttpGet("GetMembershipByCharacterId")]
     public MembershipResponse GetMembershipByCharacterId(OnlyAnLongRequest Req)
     {
         return _container.GetService<IFamilyService>().GetMembershipByCharacterIdAsync(new()
