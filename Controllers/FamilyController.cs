@@ -65,11 +65,13 @@ public class FamilyController : Controller
 
     [Authorize]
     [HttpGet("GetFamilyById")]
-    public FamilyIdResponse GetFamilyById(OnlyAnLongRequest Req) =>
-        _container.GetService<IFamilyService>().GetFamilyByIdAsync(new()
+    public FamilyIdResponse GetFamilyById(OnlyAnLongRequest Req)
+    {
+        return _container.GetService<IFamilyService>().GetFamilyByIdAsync(new()
         {
             FamilyId = Req.Value
         }).Result;
+    }
 
     [Authorize]
     [HttpGet("GetFamilyMembersByFamilyId")]
