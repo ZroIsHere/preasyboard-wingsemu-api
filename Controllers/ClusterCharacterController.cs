@@ -44,17 +44,17 @@ public class ClusterCharacterController : Controller
     }
 
     [Authorize]
-    [HttpGet("GetCharacterById")]
+    [HttpGet("GetCharactersByChannelId")]
     public ClusterCharacterGetMultipleResponse GetCharactersByChannelId() => 
         _container.GetService<IClusterCharacterService>().GetCharactersByChannelId(new()).Result;
 
     [Authorize]
-    [HttpGet("GetCharacterById")]
+    [HttpGet("GetCharactersSortedByChannel")]
     public ClusterCharacterGetSortedResponse GetCharactersSortedByChannel() => 
         _container.GetService<IClusterCharacterService>().GetCharactersSortedByChannel(new()).Result;
 
     [Authorize]
-    [HttpGet("GetCharacterById")]
+    [HttpGet("GetAllCharacters")]
     public ClusterCharacterGetMultipleResponse GetAllCharacters() => 
         _container.GetService<IClusterCharacterService>().GetAllCharacters(new()).Result;
 }
