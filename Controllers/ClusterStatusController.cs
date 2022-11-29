@@ -27,7 +27,7 @@ public class ClusterStatusController : Controller
 
     [Authorize]
     [HttpGet("GetAllServicesStatus")]
-    public ServiceGetAllResponse GetAllServicesStatus(OnlyAnStringRequest Req) =>
+    public ServiceGetAllResponse GetAllServicesStatus() =>
         _container.GetService<IClusterStatusService>().GetAllServicesStatus(new()).Result;
 
     [Authorize]
