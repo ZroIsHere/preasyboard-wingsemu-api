@@ -10,8 +10,8 @@ This api was developed to be used in conjunction with the PreasyBoard service, b
 
 ## Contributors
 
-[@ZroIsHere][ZroUser] as lead developer.
-[@vBalatroni][BahlUser] for his encryption implementation.
+- [@ZroIsHere][ZroUser] as lead developer.
+- [@vBalatroni][BahlUser] for his encryption implementation.
 
 ## Requirements
 
