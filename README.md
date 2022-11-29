@@ -16,7 +16,7 @@ This api was developed to be used in conjunction with the PreasyBoard service, b
 ## Requirements
 
 - Logically, a version of [this][VanosillaDiscord] emulator working and running with all the consoles opened.
-- [.Net 7.0 SDK][Net7SDK]or latest
+- [.Net 7.0 SDK][Net7SDK] or latest
 - Dont be a monkey with c#.
 
 ## Installation
