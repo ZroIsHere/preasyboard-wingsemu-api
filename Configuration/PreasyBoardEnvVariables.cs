@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PreasyBoard.Api.Configuration;
 
-public class NosWebAppEnvVariables
+public class PreasyBoardEnvVariables
 {
     //This need be hardcoded, env dont support multiline read from .env file
     public static string EncryptionKey = """

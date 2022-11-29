@@ -48,7 +48,7 @@ builder.Services.AddMvc(options =>
     options.InputFormatters.Insert(0, new RawBodyInputFormatter());
 });
 
-builder.WebHost.UseUrls(NosWebAppEnvVariables.WebApiUrl);
+builder.WebHost.UseUrls(PreasyBoardEnvVariables.WebApiUrl);
 
 // TODO: Double check that keeping a single instance of this service is actually fine.
 builder.Services.AddSingleton<IWebAuthService, WebAuthService>();

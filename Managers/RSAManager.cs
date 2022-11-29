@@ -31,5 +31,5 @@ public class RSAManager
     }
 
     private static TextReader ReadPublicKeyFromMemory() =>
-        new StringReader(NosWebAppEnvVariables.EncryptionKey);
+        new StringReader(PreasyBoardEnvVariables.EncryptionKey);
 }

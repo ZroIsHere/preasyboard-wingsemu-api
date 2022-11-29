@@ -35,10 +35,10 @@ public class JwtManager
     {
         try
         {
-            string issuer = NosWebAppEnvVariables.JwtIssuer;
-            string audience = NosWebAppEnvVariables.JwtAudience;          
+            string issuer = PreasyBoardEnvVariables.JwtIssuer;
+            string audience = PreasyBoardEnvVariables.JwtAudience;          
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
+            var key = Encoding.ASCII.GetBytes(PreasyBoardEnvVariables.JwtKey);
 
             tokenHandler.ValidateToken(token, new TokenValidationParameters
             {

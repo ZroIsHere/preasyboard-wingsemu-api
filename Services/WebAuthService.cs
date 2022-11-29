@@ -56,9 +56,9 @@ public class WebAuthService : IWebAuthService
             {
 
                 _challengeAttempts = new();
-                string issuer = NosWebAppEnvVariables.JwtIssuer;
-                string audience = NosWebAppEnvVariables.JwtAudience;
-                byte[] encKey = Encoding.ASCII.GetBytes(NosWebAppEnvVariables.JwtKey);
+                string issuer = PreasyBoardEnvVariables.JwtIssuer;
+                string audience = PreasyBoardEnvVariables.JwtAudience;
+                byte[] encKey = Encoding.ASCII.GetBytes(PreasyBoardEnvVariables.JwtKey);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[] {new Claim("id", oldreq.Id.ToString())}),
