@@ -5,7 +5,7 @@ This api was developed to be used in conjunction with the PreasyBoard service, b
 ## Features
 
 - Contains all non-risky grpc services (except for warehouses, these have to be handled with care).
-- With an encryption system with a public and private key (you must obtain yours from the PreasyBoard page).
+- With an assymetric encryption (you must obtain your key from the PreasyBoard page).
 - Built on .NET 7 (can in a future also be compiled as native code, see [here][Net7Aot]).
 
 ## Contributors
