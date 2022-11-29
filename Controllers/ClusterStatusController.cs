@@ -42,7 +42,7 @@ public class ClusterStatusController : Controller
         
 
     [Authorize]
-    [HttpGet("EnableMaintenanceMode")]
+    [HttpPost("EnableMaintenanceMode")]
     public BasicRpcResponse EnableMaintenanceMode(OnlyAnStringRequest Req)
     {
         return _container.GetService<IClusterStatusService>().EnableMaintenanceMode(new()
@@ -52,7 +52,7 @@ public class ClusterStatusController : Controller
     }
 
     [Authorize]
-    [HttpGet("DisableMaintenanceMode")]
+    [HttpPost("DisableMaintenanceMode")]
     public BasicRpcResponse DisableMaintenanceMode(OnlyAnStringRequest Req)
     {
         return _container.GetService<IClusterStatusService>().DisableMaintenanceMode(new()
@@ -62,22 +62,22 @@ public class ClusterStatusController : Controller
     }
 
     [Authorize]
-    [HttpGet("ScheduleGeneralMaintenance")]
+    [HttpPost("ScheduleGeneralMaintenance")]
     public BasicRpcResponse ScheduleGeneralMaintenance(ServiceScheduleGeneralMaintenanceRequest Req) =>
         _container.GetService<IClusterStatusService>().ScheduleGeneralMaintenance(Req).Result;
 
     [Authorize]
-    [HttpGet("UnscheduleGeneralMaintenance")]
+    [HttpPost("UnscheduleGeneralMaintenance")]
     public BasicRpcResponse UnscheduleGeneralMaintenance(EmptyRpcRequest Req) =>
         _container.GetService<IClusterStatusService>().UnscheduleGeneralMaintenance(Req).Result;
 
     [Authorize]
-    [HttpGet("ExecuteGeneralEmergencyMaintenance")]
+    [HttpPost("ExecuteGeneralEmergencyMaintenance")]
     public BasicRpcResponse ExecuteGeneralEmergencyMaintenance(ServiceExecuteGeneralEmergencyMaintenanceRequest Req) =>
         _container.GetService<IClusterStatusService>().ExecuteGeneralEmergencyMaintenance(Req).Result;
 
     [Authorize]
-    [HttpGet("LiftGeneralMaintenance")]
+    [HttpPost("LiftGeneralMaintenance")]
     public BasicRpcResponse LiftGeneralMaintenance(EmptyRpcRequest Req) =>
         _container.GetService<IClusterStatusService>().LiftGeneralMaintenance(Req).Result;
 }

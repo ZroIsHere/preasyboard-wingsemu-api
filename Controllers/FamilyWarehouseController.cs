@@ -42,17 +42,17 @@ public class FamilyWarehouseController : Controller
         _container.GetService<IFamilyWarehouseService>().GetItem(Req).Result;
 
     [Authorize]
-    [HttpGet("AddItem")]
+    [HttpPost("AddItem")]
     public FamilyWarehouseAddItemResponse AddItem(FamilyWarehouseAddItemRequest Req) =>
         _container.GetService<IFamilyWarehouseService>().AddItem(Req).Result;
 
     [Authorize]
-    [HttpGet("WithdrawItem")]
+    [HttpPost("WithdrawItem")]
     public FamilyWarehouseWithdrawItemResponse WithdrawItem(FamilyWarehouseWithdrawItemRequest Req) =>
         _container.GetService<IFamilyWarehouseService>().WithdrawItem(Req).Result;
 
     [Authorize]
-    [HttpGet("MoveItem")]
+    [HttpPost("MoveItem")]
     public FamilyWarehouseMoveItemResponse MoveItem(FamilyWarehouseMoveItemRequest Req) =>
         _container.GetService<IFamilyWarehouseService>().MoveItem(Req).Result;
 }

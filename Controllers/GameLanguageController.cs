@@ -10,6 +10,8 @@ using WingsEmu.Game._i18n;
 
 namespace PreasyBoard.Api.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class GameLanguageController : Controller
 {
     private readonly IServiceProvider _container;

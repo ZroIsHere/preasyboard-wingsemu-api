@@ -30,7 +30,7 @@ public class RelationController : Controller
         _container.GetService<IRelationService>().AddRelationAsync(Req).Result;
 
     [Authorize]
-    [HttpPost("GetRelationsById")]
+    [HttpGet("GetRelationsById")]
     public RelationGetAllResponse GetRelationsByIdAsync(OnlyAnLongRequest Req)
     {
         return _container.GetService<IRelationService>().GetRelationsByIdAsync(new()
