@@ -106,21 +106,25 @@ public class AccountController : Controller
     
     [Authorize]
     [HttpPost("CreateAccount")]
-    public BasicRpcResponse CreateAccount(CreateAccountRequest Req)
+    public AccountLoadResponse CreateAccount(CreateAccountRequest Req)
     {
         using GameContext dbcontext = _container.GetRequiredService<IDbContextFactory<GameContext>>().CreateDbContext();
-        if (dbcontext.Account.Any(s => s.Name.Equals(Req.AcccountName)))
+        if (dbcontext.Account.Any(s => s.Name.Equals(Req.AccountName)))
         {
-            return new(){ ResponseType = RpcResponseType.UNKNOWN_ERROR };
+            return new()
+            { 
+                ResponseType = RpcResponseType.UNKNOWN_ERROR,
+                AccountDto = null
+            };
         }
         dbcontext.Account.Add(new AccountEntity
         {
             Authority = AuthorityType.User,
             Language = AccountLanguage.EN,
-            Name = Req.AcccountName,
+            Name = Req.AccountName,
             Password = Req.Password.ToSha512()
         });
         dbcontext.SaveChangesAsync();
-        return new() { ResponseType = RpcResponseType.SUCCESS };
+        return LoadAccountByName(new() { Value = Req.AccountName });
     }
 }
