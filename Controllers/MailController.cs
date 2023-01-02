@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,7 +25,6 @@ public class MailController : Controller
         _container = container;
     }
 
-    [Authorize]
     [HttpPost("CreateMail")]
     public CreateMailResponse CreateMailAsync(CreateMailRequest req) =>
         _container.GetService<IMailService>().CreateMailAsync(req).Result;

@@ -8,16 +8,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="dotenv.net" Version="3.1.1" />
+        <PackageReference Include="dotenv.net" Version="3.1.2" />
         <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
         <PackageReference Include="NEST" Version="7.17.5" />
         <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
         <PackageReference Include="System.Reactive" Version="5.0.0" />
+        <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="7.18.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,7 +28,7 @@
         <ProjectReference Include="..\WingsEmu.Communication.gRPC\WingsEmu.Communication.gRPC.csproj" />
         <ProjectReference Include="..\_plugins\Plugin.DB.EF\Plugin.DB.EF.csproj" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
         <ProjectReference Include="..\_plugins\Plugin.ResourceLoader\Plugin.ResourceLoader.csproj" />
     </ItemGroup>
 

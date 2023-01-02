@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,7 +42,7 @@ public class CharacterController : Controller
     public DbServerSaveCharacterResponse CreateCharacter(DbServerSaveCharacterRequest Req) =>
         _container.GetService<ICharacterService>().CreateCharacter(Req).Result;
 
-    [Authorize]
+
     [HttpGet("GetCharacters")]
     public DbServerGetCharactersResponse GetCharaters(OnlyAnLongRequest Req)
     {

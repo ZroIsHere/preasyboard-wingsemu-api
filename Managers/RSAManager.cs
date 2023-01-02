@@ -25,9 +25,14 @@ public class RSAManager
     }
     private static RsaKeyParameters GetRsaKeyParams()
     {
-        var publicKeyReader = ReadPublicKeyFromMemory();
+        var publicKeyReader = ReadPublicKeyFromFile();
         var pemReader = new PemReader(publicKeyReader).ReadObject();
         return (RsaKeyParameters)pemReader;
+    }
+
+    private static TextReader ReadPublicKeyFromFile()
+    {
+        return File.OpenText("public_key.perm");
     }
 
     private static TextReader ReadPublicKeyFromMemory() =>

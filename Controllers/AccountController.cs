@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +43,11 @@ public class AccountController : Controller
             Name = Req.Value
         }).Result;
     }
-    
+
+    [Authorize]
+    [HttpGet("GetAllAccounts")]
+    public AccountGetAllResponse GetAllAccounts() => _container.GetService<IAccountService>().GetAllAccounts(new()).Result;
+
     [Authorize]
     [HttpGet("LoadAccountById")]
     public AccountLoadResponse LoadAccountById(OnlyAnLongRequest Req)

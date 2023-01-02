@@ -7,17 +7,15 @@ namespace PreasyBoard.Api.Configuration;
 public class PreasyBoardEnvVariables
 {
     //This need be hardcoded, env dont support multiline read from .env file
-    public static string EncryptionKey = """
-        -----BEGIN PUBLIC KEY-----
-        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp/DpfsTzvSYYEPBnxraG
-        t8VdQBcF53883wYR3WrT/Jr0vhhgBCFF7DMLOgbjZ0gbH6rCVI02AaPECapvJ7E5
-        KkgZIrooGEiKf/K0r/rRqmgl9gTN8Nnl5ePRYA/J26SbqrpqgIaUUsnEEtiyu+2G
-        0lAEuA61h2Q//WcqoVX44rYHCYTK/I4DL+ACNbkgklmX67LYApbGZW6wf4Q9Cq/X
-        fyusCx0MbZjLepcJAACCOenkXFPu0zOBZ6r/XsNypR18Gg9DhZ/kbqrZWEi9Clyr
-        GMe/zkXJmCDbcJ+C4rI6Gn7zwOLKSVV51DMgh8QG38WD4ga5XbBdHSg2nSsxnQR+
-        mwIDAQAB
-        -----END PUBLIC KEY-----
-        """;
+    public static string EncryptionKey = @"
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9Pu/hDkkkMfyexhOzCU3
+3tnfcDfArJuYvJHsHElHSdxSLIVnYPai/nWtJqKO4NCzh+h4SHTWJcg42YBABg9R
+oiP54qkFR9XjAIOfnxg1gdAGSbEZYxAYWnM0NJ7sw2ydDNCZS9flkoXL3LgU3ch0
+oNqhWrMnkd0qb8Jz5kCT/vfUSqffMuedcM2XiMBGIPa4t8/ePnnkl6gNNupRYgVL
+qoIMrpfCJWQKei8uYLsUZvcngO8WkeB0uM4wEHCjvxW7YI1or61UzDUWLfgwcc6w
+LyLGMNSfRJ5MG6P/v/7jccu1SdOQPRFIevXSNwIBJli25LWq7niL74G76oSPDmxb
+jQIDAQAB
+-----END PUBLIC KEY-----";
 
 
     private static string _WebApiUrl = "";
