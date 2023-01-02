@@ -46,7 +46,8 @@ public class AccountController : Controller
 
     [Authorize]
     [HttpGet("GetAllAccounts")]
-    public AccountGetAllResponse GetAllAccounts() => _container.GetService<IAccountService>().GetAllAccounts(new()).Result;
+    public List<AccountEntity> GetAllAccounts() => _container.GetRequiredService<IDbContextFactory<GameContext>>().CreateDbContext().Account.ToList();
+
 
     [Authorize]
     [HttpGet("LoadAccountById")]
